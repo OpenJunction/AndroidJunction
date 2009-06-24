@@ -9,7 +9,7 @@
   <name>junctionmanager-android</name>
   <description>java junction manager for android</description>
   <properties>
-    <android-version>1.0_r1</android-version>
+    <android-version>1.5</android-version>
     <jetty-version>6.1.12.rc2</jetty-version>     
   </properties>
   <dependencies>
