@@ -22,7 +22,7 @@
   <dependencies>
     <dependency>
     	<groupId>edu.stanford.prpl.junction</groupId>
-    	<artifactId>Junction</artifactId>
+    	<artifactId>JAVAJunction</artifactId>
     	<version>${project.version}</version>
     </dependency>
     <dependency>
