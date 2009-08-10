@@ -2,8 +2,14 @@ package edu.stanford.prpl.junction.impl;
 
 import java.net.URL;
 
-import android.os.Bundle;
+import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
+import edu.stanford.prpl.junction.api.activity.ActivityDescription;
 import edu.stanford.prpl.junction.api.activity.JunctionActor;
 
 public class AndroidJunctionMaker extends JunctionMaker {
@@ -39,11 +45,30 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @return
 	 */
 	public Junction newJunction(Bundle bundle, JunctionActor actor) {
+		Log.d("junction","Creating junction from bundle.");
+		if (bundle == null || !bundle.containsKey("junctionVersion")) {
+			Log.d("junction","Could not launch from bundle (" + bundle + ")");
+			return null;
+		}
 		
-		
-		
-		return null;
+		try {
+			JSONObject desc = new JSONObject(bundle.getString("activityDescriptor"));
+			ActivityDescription activityDesc = new ActivityDescription(desc);
+			Junction jx = new Junction(activityDesc);
+			jx.registerActor(actor);
+			
+			return jx;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
+	
+	public void findActivityByScan(Context context) {
+		Intent intent = new Intent("junction.intent.action.SCAN");
+		context.startActivity(intent);
+	}
+	
 	
 	/*
 	 * onCreate(Bundle bundle) {
@@ -59,4 +84,8 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	// public static void inviteActor(Context context, Junction activity, String{[]} suggestedRole(s))
 	// offer different ways (QR only via alert; full support via remote activity)
 	// how to return to this activity? can we just finish() the other?
+	
+	// TODO: (1) Add an intent to applaunch
+	// 		 (2) Create AndroidJunctionMaker.joinActivity(Context c) and use that intent here.
+	// 		 (3) Re-enter through the same onCreate syntax as above.
 }
