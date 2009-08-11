@@ -66,7 +66,11 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	
 	public void findActivityByScan(Context context) {
 		Intent intent = new Intent("junction.intent.action.SCAN");
-		context.startActivity(intent);
+		IntentLauncher.launch(context, 
+							intent,
+							"edu.stanford.prpl.junction.applaunch",
+							"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
+							"Junction AppLaunch");
 	}
 	
 	
