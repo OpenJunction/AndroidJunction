@@ -23,17 +23,18 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		return anonInstance;
 	}
 	
-	public static AndroidJunctionMaker getInstance(URL url) {
+	public static AndroidJunctionMaker getInstance(String switchboard) {
 		// todo: singleton per-URL?
-		return new AndroidJunctionMaker(url);
+		return new AndroidJunctionMaker(switchboard);
 	}
 	
 	protected AndroidJunctionMaker() {
 		super();
 	}
 	
-	protected AndroidJunctionMaker(URL url) {
-		super(url);
+	
+	protected AndroidJunctionMaker(String switchboard) {
+		super(switchboard);
 	}
 	
 	/**
