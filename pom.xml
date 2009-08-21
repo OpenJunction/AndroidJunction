@@ -10,7 +10,7 @@
   </parent>
   <groupId>edu.stanford.prpl.junction</groupId>
   <artifactId>AndroidJunction</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>AndroidJunction</name>
   <description>java junction manager for android</description>
