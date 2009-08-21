@@ -4,6 +4,7 @@ import java.net.URL;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -63,6 +64,12 @@ public class AndroidJunctionMaker extends JunctionMaker {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public boolean isJoinable(Activity a) {
+		if (a.getIntent() == null || a.getIntent().getExtras() == null) return false;
+		if (a.getIntent().getExtras().containsKey("junctionVersion")) return true;
+		return false;
 	}
 	
 	public void findActivityByScan(Context context) {
