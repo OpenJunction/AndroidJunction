@@ -113,6 +113,19 @@ public class AndroidJunctionMaker extends JunctionMaker {
 				JX_LAUNCHER_NAME);
 	}
 	
+	public void inviteActorBySMS(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role, String phoneNumber) {
+		Intent intent = new Intent("junction.intent.action.invite.TEXT");
+        String uri = junction.getInvitationURI(role).toString();
+        intent.putExtra("invitation", uri);
+        intent.putExtra("phoneNumber",phoneNumber);
+        
+        IntentLauncher.launch(context, 
+				intent,
+				JX_LAUNCHER_PACKAGE,
+				JX_LAUNCHER_URL,
+				JX_LAUNCHER_NAME);
+	}
+	
 	
 	/*
 	 * onCreate(Bundle bundle) {
