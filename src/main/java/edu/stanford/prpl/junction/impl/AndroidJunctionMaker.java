@@ -16,6 +16,10 @@ import edu.stanford.prpl.junction.api.activity.JunctionActor;
 public class AndroidJunctionMaker extends JunctionMaker {
 	private static AndroidJunctionMaker anonInstance = null;
 	
+	private static String JX_LAUNCHER_NAME = "Junction AppLaunch";
+	private static String JX_LAUNCHER_URL = "http://prpl.stanford.edu/android/JunctionAppLauncher.apk";
+	private static String JX_LAUNCHER_PACKAGE = "edu.stanford.prpl.junction.applaunch";
+	
 	public static AndroidJunctionMaker getInstance() {
 		if (anonInstance == null) {
 			anonInstance = new AndroidJunctionMaker();
@@ -92,10 +96,23 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		
 		IntentLauncher.launch(context, 
 							intent,
-							"edu.stanford.prpl.junction.applaunch",
-							"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
-							"Junction AppLaunch");
+							JX_LAUNCHER_PACKAGE,
+							JX_LAUNCHER_URL,
+							JX_LAUNCHER_NAME);
 	}
+	
+	public void inviteActorBySMS(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
+		Intent intent = new Intent("junction.intent.action.invite.TEXT");
+        String uri = junction.getInvitationURI(role).toString();
+        intent.putExtra("invitation", uri);
+        
+        IntentLauncher.launch(context, 
+				intent,
+				JX_LAUNCHER_PACKAGE,
+				JX_LAUNCHER_URL,
+				JX_LAUNCHER_NAME);
+	}
+	
 	
 	/*
 	 * onCreate(Bundle bundle) {
