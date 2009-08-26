@@ -78,13 +78,27 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	
 	public void findActivityByScan(Context context) {
 		// todo: this should be changed to junction.intent.action.find.SCAN or something
-		Intent intent = new Intent("junction.intent.action.SCAN");
+		Intent intent = new Intent("junction.intent.action.join.SCAN");
 		intent.putExtra("package", context.getPackageName());
 		IntentLauncher.launch(context, 
 							intent,
 							"edu.stanford.prpl.junction.applaunch",
 							"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
 							"Junction AppLaunch");
+	}
+	
+	public void inviteActorByQR(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
+		Intent intent = new Intent("junction.intent.action.invite.QR");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("sessionID",junction.getSessionID());
+		intent.putExtra("switchboard",junction.getSwitchboard());
+		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
+		
+		IntentLauncher.launch(context, 
+							intent,
+							JX_LAUNCHER_PACKAGE,
+							JX_LAUNCHER_URL,
+							JX_LAUNCHER_NAME);
 	}
 	
 	public void inviteActorByScan(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
