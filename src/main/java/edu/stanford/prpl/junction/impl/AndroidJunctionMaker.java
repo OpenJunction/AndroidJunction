@@ -1,5 +1,6 @@
 package edu.stanford.prpl.junction.impl;
 
+import java.net.URI;
 import java.net.URL;
 
 import org.json.JSONObject;
@@ -101,12 +102,18 @@ public class AndroidJunctionMaker extends JunctionMaker {
 							JX_LAUNCHER_NAME);
 	}
 	
+	/**
+	 * Scan for a Listening service and send it a 'join activity' request.
+	 * @param context
+	 * @param junction
+	 * @param role
+	 */
 	public void inviteActorByScan(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.SCAN");
 		intent.putExtra("package", context.getPackageName());
-		intent.putExtra("sessionID",junction.getSessionID());
-		intent.putExtra("switchboard",junction.getSwitchboard());
-		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
+		intent.putExtra("uri",junction.getInvitationURI(role).toString());
+		//intent.putExtra("activityDescription", junction.getActivityDescription().getJSON().toString());
+		//intent.putExtra("role",role);
 		
 		IntentLauncher.launch(context, 
 							intent,
