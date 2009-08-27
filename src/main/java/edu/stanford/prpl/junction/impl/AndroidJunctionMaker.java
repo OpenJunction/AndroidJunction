@@ -91,8 +91,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	public void inviteActorByQR(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.QR");
 		intent.putExtra("package", context.getPackageName());
-		intent.putExtra("sessionID",junction.getSessionID());
-		intent.putExtra("switchboard",junction.getSwitchboard());
+		intent.putExtra("uri", junction.getInvitationURI(role).toString());
 		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
 		
 		IntentLauncher.launch(context, 
