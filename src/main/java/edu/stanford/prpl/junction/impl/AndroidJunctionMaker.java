@@ -77,8 +77,11 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		return false;
 	}
 	
+	/**
+	 * Finds a pre-existing Junction activity by scanning for a QR code.
+	 * @param context
+	 */
 	public void findActivityByScan(Context context) {
-		// todo: this should be changed to junction.intent.action.find.SCAN or something
 		Intent intent = new Intent("junction.intent.action.join.SCAN");
 		intent.putExtra("package", context.getPackageName());
 		IntentLauncher.launch(context, 
@@ -88,6 +91,31 @@ public class AndroidJunctionMaker extends JunctionMaker {
 							"Junction AppLaunch");
 	}
 	
+	/**
+	 * Invites another actor by some unspecified means.
+	 * @param context
+	 * @param Junction
+	 * @param role
+	 */
+	public void inviteActor(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
+		Intent intent = new Intent("junction.intent.action.invite.ANY");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("uri", junction.getInvitationURI(role).toString());
+		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
+		
+		IntentLauncher.launch(context, 
+							intent,
+							JX_LAUNCHER_PACKAGE,
+							JX_LAUNCHER_URL,
+							JX_LAUNCHER_NAME);
+	}
+	
+	/**
+	 * Invites an actor to an activity by presenting a QR code on screen. 
+	 * @param context
+	 * @param junction
+	 * @param role
+	 */
 	public void inviteActorByQR(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.QR");
 		intent.putExtra("package", context.getPackageName());
@@ -121,6 +149,12 @@ public class AndroidJunctionMaker extends JunctionMaker {
 							JX_LAUNCHER_NAME);
 	}
 	
+	/**
+	 * Send an invitation to join an activity by text message.
+	 * @param context
+	 * @param junction
+	 * @param role
+	 */
 	public void inviteActorBySMS(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.TEXT");
         String uri = junction.getInvitationURI(role).toString();
@@ -133,6 +167,13 @@ public class AndroidJunctionMaker extends JunctionMaker {
 				JX_LAUNCHER_NAME);
 	}
 	
+	/**
+	 * Send an invitation to join an activity by text message.
+	 * @param context
+	 * @param junction
+	 * @param role
+	 * @param phoneNumber
+	 */
 	public void inviteActorBySMS(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role, String phoneNumber) {
 		Intent intent = new Intent("junction.intent.action.invite.TEXT");
         String uri = junction.getInvitationURI(role).toString();
@@ -147,22 +188,21 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	}
 	
 	
-	/*
-	 * onCreate(Bundle bundle) {
-	 * 		super.onCreate(bundle);
-	 * 
-	 * 	// the if (...) is only required if this Activity can be accessed directly (and not just from our intent)
-	 * 		if (AndroidJunctionMaker.isActorRequest(bundle) {
-	 * 			Junction jx = AndroidJunctionMaker.getInstance().newJunction(bundle, MyActor.getInstance());
-	 *	 	}	
-	 * }
+	/**
+	 * Creates a new Junction or joins an existing one.
+	 * If a new junction is created, the given role is instantiated.
 	 */
-	
-	// public static void inviteActor(Context context, Junction activity, String{[]} suggestedRole(s))
-	// offer different ways (QR only via alert; full support via remote activity)
-	// how to return to this activity? can we just finish() the other?
-	
-	// TODO: (1) Add an intent to applaunch
-	// 		 (2) Create AndroidJunctionMaker.joinActivity(Context c) and use that intent here.
-	// 		 (3) Re-enter through the same onCreate syntax as above.
+	/*
+	public void findActivityByScan(Context context, ActivityDescription desc, String role) {
+		Intent intent = new Intent("junction.intent.action.join.SCAN");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("role",role);
+		intent.putExtra("activityDescription", desc.getJSON().toString());
+		IntentLauncher.launch(context, 
+							intent,
+							"edu.stanford.prpl.junction.applaunch",
+							"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
+							"Junction AppLaunch");
+	}
+	*/
 }
