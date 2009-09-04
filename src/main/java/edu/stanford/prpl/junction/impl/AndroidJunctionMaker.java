@@ -43,6 +43,18 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		super(switchboard);
 	}
 	
+	
+	/**
+	 * Joins a Junction Activity based on the android.app.Activity's bundle.
+	 * 
+	 * @param bundle
+	 * @param actor
+	 * @return
+	 */
+	public Junction newJunction(Activity activity, JunctionActor actor) {
+		return newJunction(activity.getIntent().getExtras(),actor);
+	}
+	
 	/**
 	 * Junction creator from a bundle passed from
 	 * a Junction Activity Launcher
