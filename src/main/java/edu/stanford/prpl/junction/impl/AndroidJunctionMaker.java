@@ -122,6 +122,26 @@ public class AndroidJunctionMaker extends JunctionMaker {
 							JX_LAUNCHER_NAME);
 	}
 	
+	
+	/**
+	 * Invites another actor by some unspecified means.
+	 * @param context
+	 * @param Junction
+	 * @param role
+	 */
+	public void inviteActor(Context context, URI invitation) {
+		Intent intent = new Intent("junction.intent.action.invite.ANY");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("uri", invitation.toString());
+		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
+		
+		IntentLauncher.launch(context, 
+							intent,
+							JX_LAUNCHER_PACKAGE,
+							JX_LAUNCHER_URL,
+							JX_LAUNCHER_NAME);
+	}
+	
 	/**
 	 * Invites an actor to an activity by presenting a QR code on screen. 
 	 * @param context
