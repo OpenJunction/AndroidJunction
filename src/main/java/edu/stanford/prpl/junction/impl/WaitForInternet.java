@@ -60,7 +60,6 @@ public class WaitForInternet {
 		new Thread() {
 			public void run() {
 				while (!isConnected.value && isRetrying.value) {
-					Log.d("junction", "about to show dialog");
 					callback.mActivity.runOnUiThread(new Thread() {
 						@Override
 						public void run() {
@@ -68,7 +67,6 @@ public class WaitForInternet {
 						}
 					});
 
-					Log.d("junction", "should have shown it");
 					synchronized (isRetrying) {
 						try {
 							isRetrying.wait();
