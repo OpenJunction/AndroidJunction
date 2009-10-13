@@ -1,13 +1,18 @@
 package edu.stanford.prpl.junction.impl;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -43,6 +48,15 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		super(switchboard);
 	}
 	
+	
+	public URI getInvitationForActivity(Activity activity) {
+		try {
+			return new URI(activity.getIntent().getExtras().getString("invitationURI"));
+		} catch (Exception e) {
+			Log.e("junction","could not get invitation URI",e);
+			return null;
+		}
+	}
 	
 	/**
 	 * Joins a Junction Activity based on the android.app.Activity's bundle.
@@ -93,8 +107,37 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * Finds a pre-existing Junction activity by scanning for a QR code.
 	 * @param context
 	 */
-	public void findActivityByScan(Context context) {
-		Intent intent = new Intent("junction.intent.action.join.SCAN");
+	public void findActivityByScan(final Activity activity) {
+		WaitForInternetCallback callback =
+			new WaitForInternetCallback(activity) {
+			@Override
+			public void onConnectionFailure() {
+				activity.finish();
+			}
+			
+			@Override
+			public void onConnectionSuccess() {
+				Intent intent = new Intent("junction.intent.action.join.SCAN");
+				intent.putExtra("package", activity.getPackageName());
+				IntentLauncher.launch(activity, 
+									intent,
+									"edu.stanford.prpl.junction.applaunch",
+									"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
+									"Junction AppLaunch");
+			}
+		};
+		
+		try {
+			
+			WaitForInternet.setCallback(callback);
+		} catch (SecurityException e) {
+			Log.w("junction","Could not check network state.", e);
+			callback.onConnectionSuccess();
+		}
+	}
+	
+	public void joinActivity(Context context) {
+		Intent intent = new Intent("junction.intent.action.join.ANY");
 		intent.putExtra("package", context.getPackageName());
 		IntentLauncher.launch(context, 
 							intent,
@@ -218,23 +261,4 @@ public class AndroidJunctionMaker extends JunctionMaker {
 				JX_LAUNCHER_URL,
 				JX_LAUNCHER_NAME);
 	}
-	
-	
-	/**
-	 * Creates a new Junction or joins an existing one.
-	 * If a new junction is created, the given role is instantiated.
-	 */
-	/*
-	public void findActivityByScan(Context context, ActivityDescription desc, String role) {
-		Intent intent = new Intent("junction.intent.action.join.SCAN");
-		intent.putExtra("package", context.getPackageName());
-		intent.putExtra("role",role);
-		intent.putExtra("activityDescription", desc.getJSON().toString());
-		IntentLauncher.launch(context, 
-							intent,
-							"edu.stanford.prpl.junction.applaunch",
-							"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
-							"Junction AppLaunch");
-	}
-	*/
 }
