@@ -19,8 +19,6 @@ public class WaitForInternet {
 	 * @return
 	 */
 	public static void setCallback(final WaitForInternetCallback callback) {
-		Log.d("junction","setting internet callback");
-		
 		final ConnectivityManager connMan = (ConnectivityManager) callback.mActivity
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 
