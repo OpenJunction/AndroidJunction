@@ -16,36 +16,34 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
-import edu.stanford.prpl.junction.api.activity.ActivityDescription;
-import edu.stanford.prpl.junction.api.activity.JunctionActor;
+import edu.stanford.junction.Junction;
+import edu.stanford.junction.JunctionMaker;
+import edu.stanford.junction.SwitchboardConfig;
+import edu.stanford.junction.api.activity.ActivityScript;
+import edu.stanford.junction.api.activity.JunctionActor;
+import edu.stanford.junction.provider.xmpp.JunctionProvider;
+import edu.stanford.junction.provider.xmpp.XMPPSwitchboardConfig;
 
+// TODO:
+// Class hierarchy is badly broken.
+// Split out platform methods and impl methods.
+// For now, extending XMPP.JunctionMaker.
 public class AndroidJunctionMaker extends JunctionMaker {
-	private static AndroidJunctionMaker anonInstance = null;
 	
-	private static String JX_LAUNCHER_NAME = "Junction AppLaunch";
+	private static String JX_LAUNCHER_NAME = "Activity Director";
 	private static String JX_LAUNCHER_URL = "http://prpl.stanford.edu/android/JunctionAppLauncher.apk";
 	private static String JX_LAUNCHER_PACKAGE = "edu.stanford.prpl.junction.applaunch";
 	
-	public static AndroidJunctionMaker getInstance() {
-		if (anonInstance == null) {
-			anonInstance = new AndroidJunctionMaker();
-		}
+	
+	public static AndroidJunctionMaker getInstance(SwitchboardConfig config) {
+		AndroidJunctionMaker maker = new AndroidJunctionMaker();
+		maker.mProvider = maker.getProvider(config);
+		maker.mProvider.setJunctionMaker(maker);
+		return maker;
+	}
+	
+	private AndroidJunctionMaker() {
 		
-		return anonInstance;
-	}
-	
-	public static AndroidJunctionMaker getInstance(String switchboard) {
-		// todo: singleton per-URL?
-		return new AndroidJunctionMaker(switchboard);
-	}
-	
-	protected AndroidJunctionMaker() {
-		super();
-	}
-	
-	
-	protected AndroidJunctionMaker(String switchboard) {
-		super(switchboard);
 	}
 	
 	
@@ -78,7 +76,6 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @return
 	 */
 	public Junction newJunction(Bundle bundle, JunctionActor actor) {
-		Log.d("junction","Creating junction from bundle.");
 		if (bundle == null || !bundle.containsKey("junctionVersion")) {
 			Log.d("junction","Could not launch from bundle (" + bundle + ")");
 			return null;
@@ -86,9 +83,8 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		
 		try {
 			JSONObject desc = new JSONObject(bundle.getString("activityDescriptor"));
-			ActivityDescription activityDesc = new ActivityDescription(desc);
-			Junction jx = new Junction(activityDesc);
-			jx.registerActor(actor);
+			ActivityScript activityDesc = new ActivityScript(desc);
+			Junction jx = newJunction(activityDesc,actor);
 			
 			return jx;
 		} catch (Exception e) {
@@ -128,7 +124,6 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		};
 		
 		try {
-			
 			WaitForInternet.setCallback(callback);
 		} catch (SecurityException e) {
 			Log.w("junction","Could not check network state.", e);
@@ -152,7 +147,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param Junction
 	 * @param role
 	 */
-	public void inviteActor(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
+	public void inviteActor(Context context, Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.ANY");
 		intent.putExtra("package", context.getPackageName());
 		intent.putExtra("uri", junction.getInvitationURI(role).toString());
@@ -191,7 +186,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param junction
 	 * @param role
 	 */
-	public void inviteActorByQR(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
+	public void inviteActorByQR(Context context, Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.QR");
 		intent.putExtra("package", context.getPackageName());
 		intent.putExtra("uri", junction.getInvitationURI(role).toString());
@@ -210,7 +205,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param junction
 	 * @param role
 	 */
-	public void inviteActorByScan(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
+	public void inviteActorByScan(Context context, Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.SCAN");
 		intent.putExtra("package", context.getPackageName());
 		intent.putExtra("uri",junction.getInvitationURI(role).toString());
@@ -230,7 +225,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param junction
 	 * @param role
 	 */
-	public void inviteActorBySMS(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role) {
+	public void inviteActorBySMS(Context context, Junction junction, String role) {
 		Intent intent = new Intent("junction.intent.action.invite.TEXT");
         String uri = junction.getInvitationURI(role).toString();
         intent.putExtra("invitation", uri);
@@ -249,7 +244,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param role
 	 * @param phoneNumber
 	 */
-	public void inviteActorBySMS(Context context, edu.stanford.prpl.junction.api.activity.Junction junction, String role, String phoneNumber) {
+	public void inviteActorBySMS(Context context, Junction junction, String role, String phoneNumber) {
 		Intent intent = new Intent("junction.intent.action.invite.TEXT");
         String uri = junction.getInvitationURI(role).toString();
         intent.putExtra("invitation", uri);
