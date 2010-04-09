@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package edu.stanford.prpl.junction.impl;
+package edu.stanford.junction.android;
 
 import java.util.List;
 

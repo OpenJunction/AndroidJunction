@@ -1,4 +1,4 @@
-package edu.stanford.prpl.junction.impl;
+package edu.stanford.junction.android;
 
 import java.net.URI;
 import java.net.URISyntaxException;
