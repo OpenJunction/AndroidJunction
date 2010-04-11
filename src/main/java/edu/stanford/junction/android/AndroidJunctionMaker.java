@@ -119,7 +119,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 									intent,
 									"edu.stanford.prpl.junction.applaunch",
 									"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
-									"Junction AppLaunch");
+									"Activity Director");
 			}
 		};
 		
@@ -138,7 +138,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 							intent,
 							"edu.stanford.prpl.junction.applaunch",
 							"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
-							"Junction AppLaunch");
+							"Activity Director");
 	}
 	
 	/**
