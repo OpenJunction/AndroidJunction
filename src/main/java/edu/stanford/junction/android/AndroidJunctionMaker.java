@@ -103,7 +103,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * Finds a pre-existing Junction activity by scanning for a QR code.
 	 * @param context
 	 */
-	public void findActivityByScan(final Activity activity) {
+	public static void findActivityByScan(final Activity activity) {
 		WaitForInternetCallback callback =
 			new WaitForInternetCallback(activity) {
 			@Override
@@ -131,7 +131,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		}
 	}
 	
-	public void joinActivity(Context context) {
+	public static void joinActivity(Context context) {
 		Intent intent = new Intent("junction.intent.action.join.ANY");
 		intent.putExtra("package", context.getPackageName());
 		IntentLauncher.launch(context, 
