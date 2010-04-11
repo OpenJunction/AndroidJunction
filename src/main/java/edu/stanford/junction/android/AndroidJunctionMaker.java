@@ -93,7 +93,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		}
 	}
 	
-	public boolean isJoinable(Activity a) {
+	public static boolean isJoinable(Activity a) {
 		if (a.getIntent() == null || a.getIntent().getExtras() == null) return false;
 		if (a.getIntent().getExtras().containsKey("junctionVersion")) return true;
 		return false;
