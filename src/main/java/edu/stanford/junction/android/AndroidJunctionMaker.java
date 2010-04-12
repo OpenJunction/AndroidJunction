@@ -57,6 +57,24 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	}
 	
 	/**
+	 * Returns an Intent than can be used to join a Junction activity.
+	 * If you want a specific class to handle this intent,
+	 * you can specify the package/class on the returned
+	 * Intent before using it to start an activity.
+	 * 
+	 * @param junctionInvitation
+	 * @return
+	 */
+	public static Intent getIntentForActivityJoin(URI junctionInvitation) {
+		Intent launchIntent = new Intent("junction.intent.action.JOIN");
+		launchIntent.putExtra("junctionVersion", 1);
+		//launchIntent.putExtra("activityDescriptor", invitation.toString());
+		launchIntent.putExtra("invitationURI", junctionInvitation);
+		
+		return launchIntent;
+	}
+	
+	/**
 	 * Joins a Junction Activity based on the android.app.Activity's bundle.
 	 * 
 	 * @param bundle
@@ -82,11 +100,17 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		}
 		
 		try {
-			JSONObject desc = new JSONObject(bundle.getString("activityDescriptor"));
-			ActivityScript activityDesc = new ActivityScript(desc);
-			Junction jx = newJunction(activityDesc,actor);
-			
-			return jx;
+			if (bundle.containsKey("invitationURI")) {
+				// TODO: pass both activity script and uri if available?
+				URI uri = new URI(bundle.getString("invitationURI"));
+				Junction jx = newJunction(uri,actor);
+				return jx;
+			} else {
+				JSONObject desc = new JSONObject(bundle.getString("activityDescriptor"));
+				ActivityScript activityDesc = new ActivityScript(desc);
+				Junction jx = newJunction(activityDesc,actor);
+				return jx;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -131,6 +155,12 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		}
 	}
 	
+	/**
+	 * Launch the Activity Director to join an existing
+	 * Junction activity by some user-specified method.
+	 * 
+	 * @param context
+	 */
 	public static void joinActivity(Context context) {
 		Intent intent = new Intent("junction.intent.action.join.ANY");
 		intent.putExtra("package", context.getPackageName());
