@@ -126,7 +126,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		try {
 			WaitForInternet.setCallback(callback);
 		} catch (SecurityException e) {
-			Log.w("junction","Could not check network state.", e);
+			Log.w("junction","Could not check network state. If you'd like this functionality, please add the permission: android.permission.ACCESS_NETWORK_STATE", e);
 			callback.onConnectionSuccess();
 		}
 	}
