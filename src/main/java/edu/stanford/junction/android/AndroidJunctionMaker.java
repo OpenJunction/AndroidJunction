@@ -3,6 +3,12 @@ package edu.stanford.junction.android;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -20,6 +26,7 @@ import edu.stanford.junction.Junction;
 import edu.stanford.junction.JunctionMaker;
 import edu.stanford.junction.SwitchboardConfig;
 import edu.stanford.junction.api.activity.ActivityScript;
+import edu.stanford.junction.api.activity.Cast;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.provider.xmpp.JunctionProvider;
 import edu.stanford.junction.provider.xmpp.XMPPSwitchboardConfig;
@@ -30,10 +37,31 @@ import edu.stanford.junction.provider.xmpp.XMPPSwitchboardConfig;
 // For now, extending XMPP.JunctionMaker.
 public class AndroidJunctionMaker extends JunctionMaker {
 	
+	public static class Intents {
+		public static final String ACTION_JOIN = "junction.intent.action.JOIN";
+		public static final String ACTION_CAST = "junction.intent.action.CAST";
+		
+		public static final String EXTRA_CAST_ROLES = "castingRoles";
+		public static final String EXTRA_CAST_DIRECTORS = "castingDirectors";
+		
+		public static final String PACKAGE_DIRECTOR = "edu.stanford.prpl.junction.applaunch";
+	}
+	
 	private static String JX_LAUNCHER_NAME = "Activity Director";
 	private static String JX_LAUNCHER_URL = "http://prpl.stanford.edu/android/JunctionAppLauncher.apk";
-	private static String JX_LAUNCHER_PACKAGE = "edu.stanford.prpl.junction.applaunch";
+	private static String JX_LAUNCHER_PACKAGE = Intents.PACKAGE_DIRECTOR;
 	
+	public static final URI LOCAL_CASTING_DIRECTOR;
+	static {
+		URI dumbWayToAssignStaticFinalURI;
+		try {
+			dumbWayToAssignStaticFinalURI = new URI("junction://android-local/cast");
+		} catch (Exception e ) {
+			dumbWayToAssignStaticFinalURI = null;
+		}
+		LOCAL_CASTING_DIRECTOR = dumbWayToAssignStaticFinalURI;
+	}
+		
 	
 	public static AndroidJunctionMaker getInstance(SwitchboardConfig config) {
 		AndroidJunctionMaker maker = new AndroidJunctionMaker();
@@ -66,12 +94,49 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @return
 	 */
 	public static Intent getIntentForActivityJoin(URI junctionInvitation) {
-		Intent launchIntent = new Intent("junction.intent.action.JOIN");
+		Intent launchIntent = new Intent(Intents.ACTION_JOIN);
 		launchIntent.putExtra("junctionVersion", 1);
 		//launchIntent.putExtra("activityDescriptor", invitation.toString());
 		launchIntent.putExtra("invitationURI", junctionInvitation);
 		
 		return launchIntent;
+	}
+	
+
+	/**
+	 * Sends an intent to complete the casting of an activity.
+	 * 
+	 * The result will be an Intent issued, of action ACTION_JOIN.
+	 * The Intent will be populated with casting information, and should
+	 * be handled in your android.app.Activity:
+	 * 
+	 * if AndroidJunctionMaker.isJoinable(this) {
+	 * 	  maker.newJunction(this,mActor);
+	 * }
+	 * 
+	 * @param context
+	 * @param script
+	 * @param support
+	 */
+	public static void castActivity(Context context, ActivityScript script, Cast support) {
+		Intent castingIntent = new Intent(Intents.ACTION_CAST);
+		
+		// unfortunately, can only do this in API 4+.
+		//castingIntent.setPackate(Intents.PACKAGE_DIRECTOR);
+		
+		int size=support.size();
+		String[] castingRoles = new String[size];
+		String[] castingDirectors = new String[size];
+		
+		for (int i=0;i<size;i++) {
+			castingRoles[i] = support.getRole(i);
+			castingDirectors[i] = support.getDirector(i).toString();
+		}
+
+		castingIntent.putExtra(Intents.EXTRA_CAST_ROLES, castingRoles);
+		castingIntent.putExtra(Intents.EXTRA_CAST_DIRECTORS, castingDirectors);
+		
+		context.startActivity(castingIntent);
 	}
 	
 	/**
@@ -87,7 +152,11 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	
 	/**
 	 * Junction creator from a bundle passed from
-	 * a Junction Activity Launcher
+	 * a Junction Activity Director.
+	 * 
+	 * The bundle may contain the URI of an existing activity session
+	 * or an activity script for creating a new session. It may also
+	 * contain casting information.
 	 * 
 	 * @param bundle
 	 * @param actor
@@ -99,6 +168,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 			return null;
 		}
 		
+		
 		try {
 			if (bundle.containsKey("invitationURI")) {
 				// TODO: pass both activity script and uri if available?
@@ -108,7 +178,22 @@ public class AndroidJunctionMaker extends JunctionMaker {
 			} else {
 				JSONObject desc = new JSONObject(bundle.getString("activityDescriptor"));
 				ActivityScript activityDesc = new ActivityScript(desc);
-				Junction jx = newJunction(activityDesc,actor);
+				
+				Junction jx;
+				if (bundle.containsKey(Intents.EXTRA_CAST_ROLES)) {
+					String[] aroles = bundle.getStringArray(AndroidJunctionMaker.Intents.EXTRA_CAST_ROLES);
+					String[] adirectors = bundle.getStringArray(AndroidJunctionMaker.Intents.EXTRA_CAST_DIRECTORS);
+					
+					List<String>roles = Arrays.asList(aroles);
+					List<URI>directors = new LinkedList<URI>();
+					for (int i=0;i<adirectors.length;i++) {
+						directors.add(new URI(adirectors[i]));
+					}
+					Cast support = new Cast(roles,directors);
+					jx = newJunction(activityDesc,actor,support);
+				} else {
+					jx = newJunction(activityDesc,actor);
+				}
 				return jx;
 			}
 		} catch (Exception e) {
