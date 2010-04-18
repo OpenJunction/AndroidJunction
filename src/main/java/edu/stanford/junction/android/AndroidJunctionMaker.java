@@ -43,6 +43,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		
 		public static final String EXTRA_CAST_ROLES = "castingRoles";
 		public static final String EXTRA_CAST_DIRECTORS = "castingDirectors";
+		public static final String EXTRA_ACTIVITY_SCRIPT = "activityScript";
 		
 		public static final String PACKAGE_DIRECTOR = "edu.stanford.prpl.junction.applaunch";
 	}
@@ -135,7 +136,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 
 		castingIntent.putExtra(Intents.EXTRA_CAST_ROLES, castingRoles);
 		castingIntent.putExtra(Intents.EXTRA_CAST_DIRECTORS, castingDirectors);
-		
+		castingIntent.putExtra(Intents.EXTRA_ACTIVITY_SCRIPT, script.getJSON().toString());
 		context.startActivity(castingIntent);
 	}
 	
