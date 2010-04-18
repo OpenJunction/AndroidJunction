@@ -177,7 +177,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 				Junction jx = newJunction(uri,actor);
 				return jx;
 			} else {
-				JSONObject desc = new JSONObject(bundle.getString("activityDescriptor"));
+				JSONObject desc = new JSONObject(bundle.getString(Intents.EXTRA_ACTIVITY_SCRIPT));
 				ActivityScript activityDesc = new ActivityScript(desc);
 				
 				Junction jx;
