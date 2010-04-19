@@ -1,24 +1,16 @@
 package edu.stanford.junction.android;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -28,8 +20,6 @@ import edu.stanford.junction.SwitchboardConfig;
 import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.Cast;
 import edu.stanford.junction.api.activity.JunctionActor;
-import edu.stanford.junction.provider.xmpp.JunctionProvider;
-import edu.stanford.junction.provider.xmpp.XMPPSwitchboardConfig;
 
 // TODO:
 // Class hierarchy is badly broken.
@@ -52,7 +42,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	private static String JX_LAUNCHER_URL = "http://prpl.stanford.edu/android/JunctionAppLauncher.apk";
 	private static String JX_LAUNCHER_PACKAGE = Intents.PACKAGE_DIRECTOR;
 	
-	public static final URI LOCAL_CASTING_DIRECTOR;
+	public static final URI CASTING_DIRECTOR;
 	static {
 		URI dumbWayToAssignStaticFinalURI;
 		try {
@@ -60,7 +50,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		} catch (Exception e ) {
 			dumbWayToAssignStaticFinalURI = null;
 		}
-		LOCAL_CASTING_DIRECTOR = dumbWayToAssignStaticFinalURI;
+		CASTING_DIRECTOR = dumbWayToAssignStaticFinalURI;
 	}
 		
 	
