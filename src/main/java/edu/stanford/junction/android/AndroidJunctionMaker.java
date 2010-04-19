@@ -92,7 +92,8 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		Intent launchIntent = new Intent(Intents.ACTION_JOIN);
 		launchIntent.putExtra("junctionVersion", 1);
 		//launchIntent.putExtra("activityDescriptor", invitation.toString());
-		launchIntent.putExtra("invitationURI", junctionInvitation);
+		// TODO: keep URI?
+		launchIntent.putExtra("invitationURI", junctionInvitation.toString());
 		
 		return launchIntent;
 	}
