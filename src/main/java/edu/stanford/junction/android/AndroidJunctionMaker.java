@@ -27,13 +27,17 @@ import edu.stanford.junction.api.activity.JunctionActor;
 // For now, extending XMPP.JunctionMaker.
 public class AndroidJunctionMaker extends JunctionMaker {
 	
+	public static final int JUNCTION_VERSION = 1;
+	
 	public static class Intents {
 		public static final String ACTION_JOIN = "junction.intent.action.JOIN";
 		public static final String ACTION_CAST = "junction.intent.action.CAST";
 		
 		public static final String EXTRA_CAST_ROLES = "castingRoles";
 		public static final String EXTRA_CAST_DIRECTORS = "castingDirectors";
+		public static final String EXTRA_CAST_PACKAGE = "joiningPackage";
 		public static final String EXTRA_ACTIVITY_SCRIPT = "activityScript";
+		public static final String EXTRA_JUNCTION_VERSION = "junctionVersion";
 		
 		public static final String PACKAGE_DIRECTOR = "edu.stanford.prpl.junction.applaunch";
 	}
@@ -111,10 +115,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 */
 	public static void castActivity(Context context, ActivityScript script, Cast support) {
 		Intent castingIntent = new Intent(Intents.ACTION_CAST);
-		
-		// unfortunately, can only do this in API 4+.
-		//castingIntent.setPackate(Intents.PACKAGE_DIRECTOR);
-		
+
 		int size=support.size();
 		String[] castingRoles = new String[size];
 		String[] castingDirectors = new String[size];
@@ -126,7 +127,9 @@ public class AndroidJunctionMaker extends JunctionMaker {
 
 		castingIntent.putExtra(Intents.EXTRA_CAST_ROLES, castingRoles);
 		castingIntent.putExtra(Intents.EXTRA_CAST_DIRECTORS, castingDirectors);
+		castingIntent.putExtra(Intents.EXTRA_CAST_PACKAGE, context.getPackageName());
 		castingIntent.putExtra(Intents.EXTRA_ACTIVITY_SCRIPT, script.getJSON().toString());
+		
 		context.startActivity(castingIntent);
 	}
 	
@@ -154,7 +157,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @return
 	 */
 	public Junction newJunction(Bundle bundle, JunctionActor actor) {
-		if (bundle == null || !bundle.containsKey("junctionVersion")) {
+		if (bundle == null || !bundle.containsKey(Intents.EXTRA_JUNCTION_VERSION)) {
 			Log.d("junction","Could not launch from bundle (" + bundle + ")");
 			return null;
 		}
@@ -169,9 +172,9 @@ public class AndroidJunctionMaker extends JunctionMaker {
 			} else {
 				JSONObject desc = new JSONObject(bundle.getString(Intents.EXTRA_ACTIVITY_SCRIPT));
 				ActivityScript activityDesc = new ActivityScript(desc);
-				
 				Junction jx;
 				if (bundle.containsKey(Intents.EXTRA_CAST_ROLES)) {
+					Log.d("junction","casting roles");
 					String[] aroles = bundle.getStringArray(AndroidJunctionMaker.Intents.EXTRA_CAST_ROLES);
 					String[] adirectors = bundle.getStringArray(AndroidJunctionMaker.Intents.EXTRA_CAST_DIRECTORS);
 					
@@ -180,6 +183,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 					for (int i=0;i<adirectors.length;i++) {
 						directors.add(new URI(adirectors[i]));
 					}
+					Log.d("junction","going to request casting for " + directors.size() + " roles");
 					Cast support = new Cast(roles,directors);
 					jx = newJunction(activityDesc,actor,support);
 				} else {
