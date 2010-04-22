@@ -36,26 +36,23 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		public static final String EXTRA_CAST_ROLES = "castingRoles";
 		public static final String EXTRA_CAST_DIRECTORS = "castingDirectors";
 		public static final String EXTRA_CAST_PACKAGE = "joiningPackage";
+		public static final String EXTRA_CAST_OR_JOIN = "castOrJoin";
+		public static final String EXTRA_ACTIVITY_SESSION = "invitationURI";
 		public static final String EXTRA_ACTIVITY_SCRIPT = "activityScript";
 		public static final String EXTRA_JUNCTION_VERSION = "junctionVersion";
 		
 		public static final String PACKAGE_DIRECTOR = "edu.stanford.prpl.junction.applaunch";
+		
+		public static final int ALLOW_CAST=1;
+		public static final int ALLOW_JOIN=2;
 	}
 	
 	private static String JX_LAUNCHER_NAME = "Activity Director";
 	private static String JX_LAUNCHER_URL = "http://prpl.stanford.edu/android/JunctionAppLauncher.apk";
 	private static String JX_LAUNCHER_PACKAGE = Intents.PACKAGE_DIRECTOR;
 	
-	public static final URI CASTING_DIRECTOR;
-	static {
-		URI dumbWayToAssignStaticFinalURI;
-		try {
-			dumbWayToAssignStaticFinalURI = new URI("junction://android-local/cast");
-		} catch (Exception e ) {
-			dumbWayToAssignStaticFinalURI = null;
-		}
-		CASTING_DIRECTOR = dumbWayToAssignStaticFinalURI;
-	}
+	public static final URI CASTING_DIRECTOR = JunctionMaker.CASTING_DIRECTOR;
+	
 		
 	
 	public static AndroidJunctionMaker getInstance(SwitchboardConfig config) {
@@ -115,22 +112,48 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param support
 	 */
 	public static void castActivity(Context context, ActivityScript script, Cast support) {
+		castActivityHelper(context,script,support,Intents.ALLOW_CAST);
+	}
+	
+	/**
+	 * Casts or joins an activity, as
+	 * decided by the Activity Director.
+	 * If the Director detects the user is launching
+	 * to a generic target (Eg a director's activity)
+	 * then it will start a new activity.
+	 * If the user pairs with an existing activity,
+	 * then the user is joined to that session with 
+	 * no casting done.
+	 * 
+	 * @param context
+	 * @param script
+	 * @param support
+	 */
+	public static void castOrJoinActivity(Context context, ActivityScript script, Cast support) {
+		castActivityHelper(context,script,support,Intents.ALLOW_CAST|Intents.ALLOW_JOIN);
+	}
+	
+	
+	private static void castActivityHelper(Context context, ActivityScript script, Cast support, int castOrJoin) {
 		Intent castingIntent = new Intent(Intents.ACTION_CAST);
 
-		int size=support.size();
-		String[] castingRoles = new String[size];
-		String[] castingDirectors = new String[size];
-		
-		for (int i=0;i<size;i++) {
-			castingRoles[i] = support.getRole(i);
-			castingDirectors[i] = support.getDirector(i).toString();
+		if (support != null && support.size() > 0) {
+			int size=support.size();
+			String[] castingRoles = new String[size];
+			String[] castingDirectors = new String[size];
+			
+			for (int i=0;i<size;i++) {
+				castingRoles[i] = support.getRole(i);
+				castingDirectors[i] = support.getDirector(i).toString();
+			}
+			
+			castingIntent.putExtra(Intents.EXTRA_CAST_ROLES, castingRoles);
+			castingIntent.putExtra(Intents.EXTRA_CAST_DIRECTORS, castingDirectors);
 		}
-
-		castingIntent.putExtra(Intents.EXTRA_CAST_ROLES, castingRoles);
-		castingIntent.putExtra(Intents.EXTRA_CAST_DIRECTORS, castingDirectors);
+		
 		castingIntent.putExtra(Intents.EXTRA_CAST_PACKAGE, context.getPackageName());
 		castingIntent.putExtra(Intents.EXTRA_ACTIVITY_SCRIPT, script.getJSON().toString());
-		
+		castingIntent.putExtra(Intents.EXTRA_CAST_OR_JOIN, castOrJoin);
 		context.startActivity(castingIntent);
 	}
 	
@@ -165,9 +188,10 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		
 		
 		try {
-			if (bundle.containsKey("invitationURI")) {
+			if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION)) {
 				// TODO: pass both activity script and uri if available?
-				URI uri = new URI(bundle.getString("invitationURI"));
+				// TODO: still support casting?
+				URI uri = new URI(bundle.getString(Intents.EXTRA_ACTIVITY_SESSION));
 				Junction jx = newJunction(uri,actor);
 				return jx;
 			} else {
