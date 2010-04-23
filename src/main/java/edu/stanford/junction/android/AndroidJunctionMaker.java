@@ -90,7 +90,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		launchIntent.putExtra("junctionVersion", 1);
 		//launchIntent.putExtra("activityDescriptor", invitation.toString());
 		// TODO: keep URI?
-		launchIntent.putExtra("invitationURI", junctionInvitation.toString());
+		launchIntent.putExtra(Intents.EXTRA_ACTIVITY_SESSION, junctionInvitation.toString());
 		
 		return launchIntent;
 	}
@@ -191,6 +191,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 			if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION)) {
 				// TODO: pass both activity script and uri if available?
 				// TODO: still support casting?
+				Log.d("junction","joining existing session " + bundle.getString(Intents.EXTRA_ACTIVITY_SESSION));
 				URI uri = new URI(bundle.getString(Intents.EXTRA_ACTIVITY_SESSION));
 				Junction jx = newJunction(uri,actor);
 				return jx;
