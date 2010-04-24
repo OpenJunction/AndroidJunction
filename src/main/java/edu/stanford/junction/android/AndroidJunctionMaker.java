@@ -198,6 +198,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 			} else {
 				JSONObject desc = new JSONObject(bundle.getString(Intents.EXTRA_ACTIVITY_SCRIPT));
 				ActivityScript activityDesc = new ActivityScript(desc);
+				
 				Junction jx;
 				if (bundle.containsKey(Intents.EXTRA_CAST_ROLES)) {
 					Log.d("junction","casting roles");
