@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import edu.stanford.junction.Junction;
+import edu.stanford.junction.JunctionException;
 import edu.stanford.junction.JunctionMaker;
 import edu.stanford.junction.SwitchboardConfig;
 import edu.stanford.junction.api.activity.ActivityScript;
@@ -164,7 +165,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param actor
 	 * @return
 	 */
-	public Junction newJunction(Activity activity, JunctionActor actor) {
+	public Junction newJunction(Activity activity, JunctionActor actor) throws JunctionException{
 		return newJunction(activity.getIntent().getExtras(),actor);
 	}
 	
@@ -180,14 +181,13 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 * @param actor
 	 * @return
 	 */
-	public Junction newJunction(Bundle bundle, JunctionActor actor) {
+	public Junction newJunction(Bundle bundle, JunctionActor actor) throws JunctionException{
 		if (bundle == null || !bundle.containsKey(Intents.EXTRA_JUNCTION_VERSION)) {
 			Log.d("junction","Could not launch from bundle (" + bundle + ")");
 			return null;
 		}
 		
-		
-		try {
+		try{
 			if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION_URI)) {
 				// TODO: pass both activity script and uri if available?
 				// TODO: still support casting?
@@ -218,9 +218,13 @@ public class AndroidJunctionMaker extends JunctionMaker {
 				}
 				return jx;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		}
+		catch(JunctionException e){
+			throw e;
+		}
+		catch(Exception e){
+			e.printStackTrace(System.err);
+			throw new JunctionException(e);
 		}
 	}
 	
@@ -237,22 +241,22 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	public static void findActivityByScan(final Activity activity) {
 		WaitForInternetCallback callback =
 			new WaitForInternetCallback(activity) {
-			@Override
-			public void onConnectionFailure() {
-				activity.finish();
-			}
+				@Override
+				public void onConnectionFailure() {
+					activity.finish();
+				}
 			
-			@Override
-			public void onConnectionSuccess() {
-				Intent intent = new Intent("junction.intent.action.join.SCAN");
-				intent.putExtra("package", activity.getPackageName());
-				IntentLauncher.launch(activity, 
-									intent,
-									"edu.stanford.prpl.junction.applaunch",
-									"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
-									"Activity Director");
-			}
-		};
+				@Override
+				public void onConnectionSuccess() {
+					Intent intent = new Intent("junction.intent.action.join.SCAN");
+					intent.putExtra("package", activity.getPackageName());
+					IntentLauncher.launch(activity, 
+										  intent,
+										  "edu.stanford.prpl.junction.applaunch",
+										  "http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
+										  "Activity Director");
+				}
+			};
 		
 		try {
 			WaitForInternet.setCallback(callback);
@@ -272,10 +276,10 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		Intent intent = new Intent("junction.intent.action.join.ANY");
 		intent.putExtra("package", context.getPackageName());
 		IntentLauncher.launch(context, 
-							intent,
-							"edu.stanford.prpl.junction.applaunch",
-							"http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
-							"Activity Director");
+							  intent,
+							  "edu.stanford.prpl.junction.applaunch",
+							  "http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
+							  "Activity Director");
 	}
 	
 	/**
@@ -291,10 +295,10 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
 		
 		IntentLauncher.launch(context, 
-							intent,
-							JX_LAUNCHER_PACKAGE,
-							JX_LAUNCHER_URL,
-							JX_LAUNCHER_NAME);
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
 	}
 	
 	
@@ -311,10 +315,10 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
 		
 		IntentLauncher.launch(context, 
-							intent,
-							JX_LAUNCHER_PACKAGE,
-							JX_LAUNCHER_URL,
-							JX_LAUNCHER_NAME);
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
 	}
 	
 	/**
@@ -330,10 +334,10 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
 		
 		IntentLauncher.launch(context, 
-							intent,
-							JX_LAUNCHER_PACKAGE,
-							JX_LAUNCHER_URL,
-							JX_LAUNCHER_NAME);
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
 	}
 	
 	/**
@@ -350,10 +354,10 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		//intent.putExtra("role",role);
 		
 		IntentLauncher.launch(context, 
-							intent,
-							JX_LAUNCHER_PACKAGE,
-							JX_LAUNCHER_URL,
-							JX_LAUNCHER_NAME);
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
 	}
 	
 	/**
@@ -368,10 +372,10 @@ public class AndroidJunctionMaker extends JunctionMaker {
         intent.putExtra("invitation", uri);
         
         IntentLauncher.launch(context, 
-				intent,
-				JX_LAUNCHER_PACKAGE,
-				JX_LAUNCHER_URL,
-				JX_LAUNCHER_NAME);
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
 	}
 	
 	/**
@@ -388,9 +392,9 @@ public class AndroidJunctionMaker extends JunctionMaker {
         intent.putExtra("phoneNumber",phoneNumber);
         
         IntentLauncher.launch(context, 
-				intent,
-				JX_LAUNCHER_PACKAGE,
-				JX_LAUNCHER_URL,
-				JX_LAUNCHER_NAME);
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
 	}
 }
