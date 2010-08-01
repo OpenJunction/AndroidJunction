@@ -37,7 +37,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		public static final String EXTRA_CAST_DIRECTORS = "castingDirectors";
 		public static final String EXTRA_CAST_PACKAGE = "joiningPackage";
 		public static final String EXTRA_CAST_OR_JOIN = "castOrJoin";
-		public static final String EXTRA_ACTIVITY_SESSION = "invitationURI";
+		public static final String EXTRA_ACTIVITY_SESSION_URI = "invitationURI";
 		public static final String EXTRA_ACTIVITY_SCRIPT = "activityScript";
 		public static final String EXTRA_JUNCTION_VERSION = "junctionVersion";
 		
@@ -90,7 +90,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		launchIntent.putExtra("junctionVersion", 1);
 		//launchIntent.putExtra("activityDescriptor", invitation.toString());
 		// TODO: keep URI?
-		launchIntent.putExtra(Intents.EXTRA_ACTIVITY_SESSION, junctionInvitation.toString());
+		launchIntent.putExtra(Intents.EXTRA_ACTIVITY_SESSION_URI, junctionInvitation.toString());
 		
 		return launchIntent;
 	}
@@ -188,11 +188,11 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		
 		
 		try {
-			if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION)) {
+			if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION_URI)) {
 				// TODO: pass both activity script and uri if available?
 				// TODO: still support casting?
-				Log.d("junction","joining existing session " + bundle.getString(Intents.EXTRA_ACTIVITY_SESSION));
-				URI uri = new URI(bundle.getString(Intents.EXTRA_ACTIVITY_SESSION));
+				Log.d("junction","joining existing session " + bundle.getString(Intents.EXTRA_ACTIVITY_SESSION_URI));
+				URI uri = new URI(bundle.getString(Intents.EXTRA_ACTIVITY_SESSION_URI));
 				Junction jx = newJunction(uri,actor);
 				return jx;
 			} else {
