@@ -21,9 +21,19 @@
 
   <dependencies>
     <dependency>
-    	<groupId>edu.stanford.prpl.junction</groupId>
-    	<artifactId>JAVAJunction</artifactId>
-    	<version>${project.version}</version>
+      <groupId>edu.stanford.prpl.junction</groupId>
+      <artifactId>JAVAJunction</artifactId>
+      <version>${project.version}</version>
+      <exclusions>
+    	<exclusion>
+    	  <groupId>xpp3</groupId>
+          <artifactId>xpp3</artifactId>
+    	</exclusion>
+    	<exclusion>
+    	  <groupId>json</groupId>
+    	  <artifactId>json</artifactId>
+    	</exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>android</groupId>
@@ -31,6 +41,7 @@
       <version>${android-version}</version>
       <scope>provided</scope>
     </dependency>
+ 
   </dependencies>
   <build>
     <plugins>
