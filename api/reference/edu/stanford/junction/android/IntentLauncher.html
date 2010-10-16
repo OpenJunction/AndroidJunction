@@ -260,7 +260,7 @@ Summary:
 
 
   
-    extends <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">Object</a><br/>
+    extends <a href="http://developer.android.com/reference/java/lang/Object.html">Object</a><br/>
   
   
   
@@ -280,7 +280,7 @@ Summary:
 
     <tr>
          	
-        <td colspan="2" class="jd-inheritance-class-cell"><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">java.lang.Object</a></td>
+        <td colspan="2" class="jd-inheritance-class-cell"><a href="http://developer.android.com/reference/java/lang/Object.html">java.lang.Object</a></td>
     </tr>
     
 
@@ -309,8 +309,8 @@ Summary:
  <p>Integration is essentially as easy as calling #initiateScan(Activity, componentName, appName) and waiting
  for the result in your app.</p>
 
- <p>There are a few steps to using this integration. First, your Activity must implement
- the method <code><a href="null#onActivityResult(int, int, android.content.Intent)">onActivityResult(int, int, Intent)</a></code> and include a line of code like this:</p>
+ <p>There are a few steps to using this integration. First, your <code><a href="http://developer.android.com/reference/android/app/Activity.html">Activity</a></code> must implement
+ the method <code><a href="http://developer.android.com/reference/android/app/Activity.html#onActivityResult(int, int, android.content.Intent)">onActivityResult(int, int, Intent)</a></code> and include a line of code like this:</p>
 
  <p><code>public void onActivityResult(int requestCode, int resultCode, Intent intent) {
    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -421,7 +421,7 @@ Summary:
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, android.content.Intent, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(Context context, Intent intent, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadRef, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> appName)</nobr>
+        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, android.content.Intent, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/android/content/Intent.html">Intent</a> intent, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadRef, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> appName)</nobr>
         
   </td></tr>
 
@@ -437,7 +437,7 @@ Summary:
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, android.content.Intent, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(Context context, Intent intentLaunch, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadRef, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringTitle, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringMessage, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonYes, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonNo)</nobr>
+        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, android.content.Intent, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/android/content/Intent.html">Intent</a> intentLaunch, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadRef, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringTitle, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringMessage, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonYes, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonNo)</nobr>
         
         <div class="jd-descrdiv">Launches an intent.</div>
   
@@ -455,7 +455,7 @@ Summary:
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(Context context, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> action, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName)</nobr>
+        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> action, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName)</nobr>
         
   </td></tr>
 
@@ -471,7 +471,7 @@ Summary:
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(Context context, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> action, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadTerm, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringTitle, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringMessage, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonYes, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonNo)</nobr>
+        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> action, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadTerm, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringTitle, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringMessage, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonYes, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonNo)</nobr>
         
         <div class="jd-descrdiv">Launches an intent.</div>
   
@@ -489,7 +489,7 @@ Summary:
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(Context context, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> action, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadTerm, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName)</nobr>
+        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">launch</a></span>(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> action, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadTerm, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName)</nobr>
         
   </td></tr>
 
@@ -505,7 +505,7 @@ Summary:
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, android.content.Intent, java.lang.String)">launch</a></span>(Context context, Intent intent, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> appName)</nobr>
+        <span class="sympad"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html#launch(android.content.Context, android.content.Intent, java.lang.String)">launch</a></span>(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/android/content/Intent.html">Intent</a> intent, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> appName)</nobr>
         
   </td></tr>
 
@@ -533,7 +533,7 @@ Summary:
           class="jd-expando-trigger-img" /></a>
 From class
 
-  <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">java.lang.Object</a>
+  <a href="http://developer.android.com/reference/java/lang/Object.html">java.lang.Object</a>
 
 <div id="inherited-methods-java.lang.Object">
   <div id="inherited-methods-java.lang.Object-list"
@@ -552,7 +552,7 @@ From class
             
             
             
-            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">Object</a></nobr>
+            <a href="http://developer.android.com/reference/java/lang/Object.html">Object</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad">clone</span>()</nobr>
@@ -571,7 +571,7 @@ From class
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad">equals</span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">Object</a> arg0)</nobr>
+        <span class="sympad">equals</span>(<a href="http://developer.android.com/reference/java/lang/Object.html">Object</a> arg0)</nobr>
         
   </td></tr>
 
@@ -600,7 +600,7 @@ From class
             final
             
             
-            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Class.html">Class</a>&lt;?&gt;</nobr>
+            <a href="http://developer.android.com/reference/java/lang/Class.html">Class</a>&lt;?&gt;</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad">getClass</span>()</nobr>
@@ -664,7 +664,7 @@ From class
             
             
             
-            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+            <a href="http://developer.android.com/reference/java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad">toString</span>()</nobr>
@@ -828,7 +828,7 @@ From class
         boolean
       </span>
       <span class="sympad">launch</span>
-      <span class="normal">(Context context, Intent intent, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadRef, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> appName)</span>
+      <span class="normal">(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/android/content/Intent.html">Intent</a> intent, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadRef, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> appName)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -859,7 +859,7 @@ From class
         boolean
       </span>
       <span class="sympad">launch</span>
-      <span class="normal">(Context context, Intent intentLaunch, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadRef, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringTitle, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringMessage, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonYes, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonNo)</span>
+      <span class="normal">(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/android/content/Intent.html">Intent</a> intentLaunch, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadRef, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringTitle, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringMessage, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonYes, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonNo)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -901,7 +901,7 @@ From class
       <h5 class="jd-tagtitle">Throws</h5>
       <table class="jd-tagtable">  
         <tr>
-            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/InterruptedException.html">InterruptedException</a></td>
+            <th><a href="http://developer.android.com/reference/java/lang/InterruptedException.html">InterruptedException</a></td>
             <td>if timeout expires before a scan completes
 </td>
         </tr>
@@ -925,7 +925,7 @@ From class
         boolean
       </span>
       <span class="sympad">launch</span>
-      <span class="normal">(Context context, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> action, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName)</span>
+      <span class="normal">(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> action, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -956,7 +956,7 @@ From class
         boolean
       </span>
       <span class="sympad">launch</span>
-      <span class="normal">(Context context, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> action, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadTerm, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringTitle, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringMessage, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonYes, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringButtonNo)</span>
+      <span class="normal">(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> action, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadTerm, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringTitle, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringMessage, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonYes, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringButtonNo)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -998,7 +998,7 @@ From class
       <h5 class="jd-tagtitle">Throws</h5>
       <table class="jd-tagtable">  
         <tr>
-            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/InterruptedException.html">InterruptedException</a></td>
+            <th><a href="http://developer.android.com/reference/java/lang/InterruptedException.html">InterruptedException</a></td>
             <td>if timeout expires before a scan completes
 </td>
         </tr>
@@ -1022,7 +1022,7 @@ From class
         boolean
       </span>
       <span class="sympad">launch</span>
-      <span class="normal">(Context context, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> action, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> packageName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> downloadTerm, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> stringAppName)</span>
+      <span class="normal">(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> action, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> packageName, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> downloadTerm, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> stringAppName)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1053,7 +1053,7 @@ From class
         boolean
       </span>
       <span class="sympad">launch</span>
-      <span class="normal">(Context context, Intent intent, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> appName)</span>
+      <span class="normal">(<a href="http://developer.android.com/reference/android/content/Context.html">Context</a> context, <a href="http://developer.android.com/reference/android/content/Intent.html">Intent</a> intent, <a href="http://developer.android.com/reference/java/lang/String.html">String</a> appName)</span>
     </h4>
       <div class="api-level">
         <div>
