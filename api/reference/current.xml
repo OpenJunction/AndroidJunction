@@ -1,0 +1,669 @@
+<api>
+<package name="edu.stanford.junction.android"
+>
+<class name="AndroidJunctionMaker"
+ extends="edu.stanford.junction.JunctionMaker"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="castActivity"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="script" type="edu.stanford.junction.api.activity.ActivityScript">
+</parameter>
+<parameter name="support" type="edu.stanford.junction.api.activity.Cast">
+</parameter>
+</method>
+<method name="castOrJoinActivity"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="script" type="edu.stanford.junction.api.activity.ActivityScript">
+</parameter>
+<parameter name="support" type="edu.stanford.junction.api.activity.Cast">
+</parameter>
+</method>
+<method name="findActivityByScan"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="activity" type="android.app.Activity">
+</parameter>
+</method>
+<method name="getInstance"
+ return="edu.stanford.junction.android.AndroidJunctionMaker"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="config" type="edu.stanford.junction.SwitchboardConfig">
+</parameter>
+</method>
+<method name="getIntentForActivityJoin"
+ return="android.content.Intent"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="junctionInvitation" type="java.net.URI">
+</parameter>
+</method>
+<method name="getInvitationForActivity"
+ return="java.net.URI"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="activity" type="android.app.Activity">
+</parameter>
+</method>
+<method name="inviteActor"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="junction" type="edu.stanford.junction.Junction">
+</parameter>
+<parameter name="role" type="java.lang.String">
+</parameter>
+</method>
+<method name="inviteActor"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="invitation" type="java.net.URI">
+</parameter>
+</method>
+<method name="inviteActorByQR"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="junction" type="edu.stanford.junction.Junction">
+</parameter>
+<parameter name="role" type="java.lang.String">
+</parameter>
+</method>
+<method name="inviteActorBySMS"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="junction" type="edu.stanford.junction.Junction">
+</parameter>
+<parameter name="role" type="java.lang.String">
+</parameter>
+</method>
+<method name="inviteActorBySMS"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="junction" type="edu.stanford.junction.Junction">
+</parameter>
+<parameter name="role" type="java.lang.String">
+</parameter>
+<parameter name="phoneNumber" type="java.lang.String">
+</parameter>
+</method>
+<method name="inviteActorByScan"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="junction" type="edu.stanford.junction.Junction">
+</parameter>
+<parameter name="role" type="java.lang.String">
+</parameter>
+</method>
+<method name="isJoinable"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="a" type="android.app.Activity">
+</parameter>
+</method>
+<method name="joinActivity"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+</method>
+<method name="newJunction"
+ return="edu.stanford.junction.Junction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="activity" type="android.app.Activity">
+</parameter>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
+<method name="newJunction"
+ return="edu.stanford.junction.Junction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="bundle" type="android.os.Bundle">
+</parameter>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
+<field name="CASTING_DIRECTOR"
+ type="java.net.URI"
+ transient="false"
+ volatile="false"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="JUNCTION_VERSION"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="AndroidJunctionMaker.Intents"
+ extends="java.lang.Object"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="AndroidJunctionMaker.Intents"
+ type="edu.stanford.junction.android.AndroidJunctionMaker.Intents"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<field name="ACTION_CAST"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;junction.intent.action.CAST&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ACTION_JOIN"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;junction.intent.action.JOIN&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ALLOW_CAST"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ALLOW_JOIN"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_ACTIVITY_SCRIPT"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;activityScript&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_ACTIVITY_SESSION_URI"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;invitationURI&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_CAST_DIRECTORS"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;castingDirectors&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_CAST_OR_JOIN"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;castOrJoin&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_CAST_PACKAGE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;joiningPackage&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_CAST_ROLES"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;castingRoles&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_JUNCTION_VERSION"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;junctionVersion&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="PACKAGE_DIRECTOR"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;edu.stanford.prpl.junction.applaunch&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="IntentLauncher"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="launch"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="intent" type="android.content.Intent">
+</parameter>
+<parameter name="appName" type="java.lang.String">
+</parameter>
+</method>
+<method name="launch"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="intent" type="android.content.Intent">
+</parameter>
+<parameter name="packageName" type="java.lang.String">
+</parameter>
+<parameter name="downloadRef" type="java.lang.String">
+</parameter>
+<parameter name="appName" type="java.lang.String">
+</parameter>
+</method>
+<method name="launch"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="action" type="java.lang.String">
+</parameter>
+<parameter name="packageName" type="java.lang.String">
+</parameter>
+<parameter name="stringAppName" type="java.lang.String">
+</parameter>
+</method>
+<method name="launch"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="action" type="java.lang.String">
+</parameter>
+<parameter name="packageName" type="java.lang.String">
+</parameter>
+<parameter name="downloadTerm" type="java.lang.String">
+</parameter>
+<parameter name="stringAppName" type="java.lang.String">
+</parameter>
+</method>
+<method name="launch"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="action" type="java.lang.String">
+</parameter>
+<parameter name="packageName" type="java.lang.String">
+</parameter>
+<parameter name="downloadTerm" type="java.lang.String">
+</parameter>
+<parameter name="stringAppName" type="java.lang.String">
+</parameter>
+<parameter name="stringTitle" type="java.lang.String">
+</parameter>
+<parameter name="stringMessage" type="java.lang.String">
+</parameter>
+<parameter name="stringButtonYes" type="java.lang.String">
+</parameter>
+<parameter name="stringButtonNo" type="java.lang.String">
+</parameter>
+</method>
+<method name="launch"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="intentLaunch" type="android.content.Intent">
+</parameter>
+<parameter name="packageName" type="java.lang.String">
+</parameter>
+<parameter name="downloadRef" type="java.lang.String">
+</parameter>
+<parameter name="stringAppName" type="java.lang.String">
+</parameter>
+<parameter name="stringTitle" type="java.lang.String">
+</parameter>
+<parameter name="stringMessage" type="java.lang.String">
+</parameter>
+<parameter name="stringButtonYes" type="java.lang.String">
+</parameter>
+<parameter name="stringButtonNo" type="java.lang.String">
+</parameter>
+</method>
+<field name="REQUEST_CODE"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="7384546"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="WaitForInternet"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="WaitForInternet"
+ type="edu.stanford.junction.android.WaitForInternet"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="setCallback"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="callback" type="edu.stanford.junction.android.WaitForInternetCallback">
+</parameter>
+</method>
+</class>
+<class name="WaitForInternetCallback"
+ extends="java.lang.Object"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="WaitForInternetCallback"
+ type="edu.stanford.junction.android.WaitForInternetCallback"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="activity" type="android.app.Activity">
+</parameter>
+</constructor>
+<method name="onConnectionFailure"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onConnectionSuccess"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<field name="mActivity"
+ type="android.app.Activity"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+</class>
+</package>
+</api>

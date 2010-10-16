@@ -1,0 +1,9 @@
+var DATA = [
+      { id:0, label:"edu.stanford.junction.android", link:"edu/stanford/junction/android/package-summary.html", type:"package" },
+      { id:1, label:"edu.stanford.junction.android.AndroidJunctionMaker", link:"edu/stanford/junction/android/AndroidJunctionMaker.html", type:"class" },
+      { id:2, label:"edu.stanford.junction.android.AndroidJunctionMaker.Intents", link:"edu/stanford/junction/android/AndroidJunctionMaker.Intents.html", type:"class" },
+      { id:3, label:"edu.stanford.junction.android.IntentLauncher", link:"edu/stanford/junction/android/IntentLauncher.html", type:"class" },
+      { id:4, label:"edu.stanford.junction.android.WaitForInternet", link:"edu/stanford/junction/android/WaitForInternet.html", type:"class" },
+      { id:5, label:"edu.stanford.junction.android.WaitForInternetCallback", link:"edu/stanford/junction/android/WaitForInternetCallback.html", type:"class" }
+
+    ];
