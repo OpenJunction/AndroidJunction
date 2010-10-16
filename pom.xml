@@ -69,12 +69,12 @@
         <version>2.7</version>
         <configuration>
           <bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jsse.jar</bootclasspath>
-          <docletPath>/path/to/doclava/Doclava/0.9/Doclava-0.9.jar</docletPath>
+          <docletPath>/path/to/com/google/doclava/Doclava/0.9/Doclava-0.9.jar</docletPath>
           <doclet>com.google.doclava.Doclava</doclet>
           <additionalparam>
              -quiet
-             -federate JDK http://download.oracle.com/javase/6/docs/api/index.html?
-             -federationxml JDK http://doclava.googlecode.com/svn/static/api/openjdk-6.xml
+             -federate Android http://developer.android.com/reference
+             -federationxml Android http://doclava.googlecode.com/svn/static/api/android-8.xml
              -federate Junction http://openjunction.github.com/JavaJunction/api/reference
              -hdf project.name "Junction for Android (v0.6.7)"
            </additionalparam>
