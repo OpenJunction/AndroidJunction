@@ -62,6 +62,25 @@
           </descriptorRefs>
         </configuration>
       </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jsse.jar</bootclasspath>
+          <docletPath>/path/to/doclava/Doclava/0.9/Doclava-0.9.jar</docletPath>
+          <doclet>com.google.doclava.Doclava</doclet>
+          <additionalparam>
+             -quiet
+             -federate JDK http://download.oracle.com/javase/6/docs/api/index.html?
+             -federationxml JDK http://doclava.googlecode.com/svn/static/api/openjdk-6.xml
+             -federate Junction http://openjunction.github.com/JavaJunction/api/reference
+             -hdf project.name "Junction for Android (v0.6.7)"
+           </additionalparam>
+          <useStandardDocletOptions>false</useStandardDocletOptions>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <repositories>
