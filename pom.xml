@@ -16,7 +16,7 @@
   <description>java junction manager for android</description>
 
   <properties>
-    <android-version>1.5</android-version>
+    <android-version>8</android-version>
   </properties>
 
   <dependencies>

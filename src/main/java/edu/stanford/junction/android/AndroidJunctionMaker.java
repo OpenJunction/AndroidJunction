@@ -38,6 +38,8 @@ import edu.stanford.junction.SwitchboardConfig;
 import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.Cast;
 import edu.stanford.junction.api.activity.JunctionActor;
+import edu.stanford.junction.provider.JunctionProvider;
+import edu.stanford.junction.provider.bluetooth.BluetoothSwitchboardConfig;
 
 // TODO:
 // Class hierarchy is badly broken.
@@ -413,5 +415,25 @@ public class AndroidJunctionMaker extends JunctionMaker {
 							  JX_LAUNCHER_PACKAGE,
 							  JX_LAUNCHER_URL,
 							  JX_LAUNCHER_NAME);
+	}
+	
+	@Override
+	protected JunctionProvider getProvider(SwitchboardConfig switchboardConfig) {
+		if (switchboardConfig instanceof BluetoothSwitchboardConfig) {
+			return new edu.stanford.junction.provider.bluetooth.JunctionProvider((BluetoothSwitchboardConfig)switchboardConfig);
+		}
+		return super.getProvider(switchboardConfig);
+	}
+	
+	@Override
+	protected JunctionProvider getProviderForUri(URI uri,
+			JunctionProvider defaultProvider) {
+		String fragment = uri.getFragment();
+		if (fragment != null) {
+			if (fragment.equals("bt")) {
+				return new edu.stanford.junction.provider.bluetooth.JunctionProvider(new BluetoothSwitchboardConfig());
+			}
+		}
+		return super.getProviderForUri(uri, defaultProvider);
 	}
 }
