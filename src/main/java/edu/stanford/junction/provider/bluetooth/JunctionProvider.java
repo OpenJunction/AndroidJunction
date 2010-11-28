@@ -55,7 +55,7 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 		
 		// TODO: this is clearly terrible.
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {}
 		ActivityScript script = jx.getActivityScript();
 		Log.d("junction","got activity script " + script);
