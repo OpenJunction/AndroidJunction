@@ -72,9 +72,7 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	private static String JX_LAUNCHER_PACKAGE = Intents.PACKAGE_DIRECTOR;
 	
 	public static final URI CASTING_DIRECTOR = JunctionMaker.CASTING_DIRECTOR;
-	
 		
-	
 	public static AndroidJunctionMaker getInstance(SwitchboardConfig config) {
 		AndroidJunctionMaker maker = new AndroidJunctionMaker();
 		maker.mProvider = maker.getProvider(config);
@@ -425,15 +423,13 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		return super.getProvider(switchboardConfig);
 	}
 	
-	@Override
-	protected JunctionProvider getProviderForUri(URI uri,
-			JunctionProvider defaultProvider) {
+	public static SwitchboardConfig getDefaultSwitchboardConfig(URI uri) {
 		String fragment = uri.getFragment();
 		if (fragment != null) {
-			if (fragment.equals("bt")) {
-				return new edu.stanford.junction.provider.bluetooth.JunctionProvider(new BluetoothSwitchboardConfig());
+			if (fragment.equalsIgnoreCase("bt")) {
+				return new BluetoothSwitchboardConfig();
 			}
 		}
-		return super.getProviderForUri(uri, defaultProvider);
+		return JunctionMaker.getDefaultSwitchboardConfig(uri);
 	}
 }

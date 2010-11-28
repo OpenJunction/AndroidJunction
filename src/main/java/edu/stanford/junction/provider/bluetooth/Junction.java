@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import org.json.JSONException;
@@ -28,6 +30,7 @@ import org.json.JSONObject;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
@@ -37,11 +40,18 @@ import edu.stanford.junction.api.messaging.MessageHeader;
 
 public class Junction extends edu.stanford.junction.Junction {
 	private static String TAG = "junction";
-	private ActivityScript mActivityScript;
+	public static String NS_JX = "jx";
+	private static String JX_BT_SYS_MSG = "btsysmsg";
+	private static String JX_SCRIPT = "ascript";
 	
-	private BluetoothAdapter mAdapter = BluetoothAdapter.getDefaultAdapter();
+	private ActivityScript mActivityScript;
+	private Set<ConnectedThread> mConnections;
+	
+	private BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+	private AcceptThread mAcceptThread;
 	private ConnectThread mConnectThread;
 	private ConnectedThread mConnectedThread;
+	private boolean mIsHub;
 	private URI mUri;
 	private String mSession;
 	private String mSwitchboard;
@@ -49,23 +59,42 @@ public class Junction extends edu.stanford.junction.Junction {
 	public Junction(URI uri, ActivityScript script, final JunctionActor actor) {
 		mActivityScript = script;
 		mUri = uri;		
-		mSession = uri.getPath().substring(1);
 		mSwitchboard = uri.getAuthority();
 		
 		setActor(actor);
 		triggerActorJoin(script == null || script.isActivityCreator());
 
-		// TODO: if (mSwitchboard == mAdapter.getAddress()), start in hub mode.
-		Log.d("junction","connecting to junction session: " + mSession);
-		BluetoothDevice hub = mAdapter.getRemoteDevice(mSwitchboard);
-		mConnectThread = new ConnectThread(hub, UUID.fromString(mSession));
-		mConnectThread.start();
+		if (mSwitchboard.equals(mBtAdapter.getAddress())) {
+			Log.d(TAG, "starting new junction hub");
+			mIsHub = true;
+			mSession = BluetoothSwitchboardConfig.APP_UUID.toString();
+			mConnections = new HashSet<ConnectedThread>();
+			mAcceptThread = new AcceptThread();
+			mAcceptThread.start();
+		} else {
+			Log.d(TAG, "connecting to junction hub: " + mSwitchboard);
+			mIsHub = false;
+			mSession = uri.getPath().substring(1);
+			BluetoothDevice hub = mBtAdapter.getRemoteDevice(mSwitchboard);
+			mConnectThread = new ConnectThread(hub, BluetoothSwitchboardConfig.APP_UUID);
+			mConnectThread.start();
+		}
 	}
 	
 	@Override
 	public void disconnect() {
-		// TODO Auto-generated method stub
-		
+		if (mIsHub) {
+			for (ConnectedThread conn : mConnections) {
+				conn.cancel();
+			}
+			try {
+				mAcceptThread.cancel();
+			} catch (Exception e) {}
+		} else {
+			try {
+				mConnectedThread.cancel();
+			} catch (Exception e) {}
+		}
 	}
 
 	@Override
@@ -107,7 +136,23 @@ public class Junction extends edu.stanford.junction.Junction {
 		try {
 			jx.put("targetActor", actorID);
 		} catch (Exception e) {}
-		mConnectedThread.write(message.toString().getBytes());
+		byte[] bytes = message.toString().getBytes();
+		
+		if (mIsHub) {
+			// TODO: make header proper. Add sender, etc.
+            // Try to roll this into framework?
+            String from = "me";
+            MessageHeader header = new MessageHeader(Junction.this,message,from);
+            
+            synchronized (Junction.this) {
+            	Junction.this.triggerMessageReceived(header, message);
+            	for (ConnectedThread conn : mConnections) {
+                	conn.write(bytes, bytes.length);
+                }
+            }
+		} else {
+			mConnectedThread.write(bytes, bytes.length);
+		}
 	}
 
 	@Override
@@ -124,13 +169,45 @@ public class Junction extends edu.stanford.junction.Junction {
 		try {
 			jx.put("targetRole", role);
 		} catch (Exception e) {}
-		mConnectedThread.write(message.toString().getBytes());
+		byte[] bytes = message.toString().getBytes();
+		
+		if (mIsHub) {
+			// TODO: make header proper. Add sender, etc.
+            // Try to roll this into framework?
+            String from = "me";
+            MessageHeader header = new MessageHeader(Junction.this,message,from);
+            
+            synchronized (Junction.this) {
+            	Junction.this.triggerMessageReceived(header, message);
+            	for (ConnectedThread conn : mConnections) {
+                	conn.write(bytes, bytes.length);
+                }
+            }
+		} else {
+			mConnectedThread.write(bytes, bytes.length);
+		}
 	}
 
 	@Override
 	public void doSendMessageToSession(JSONObject message) {
 		Log.d(TAG,"writing to session: " + message);
-		mConnectedThread.write(message.toString().getBytes());
+		byte[] bytes = message.toString().getBytes();
+		
+		if (mIsHub) {
+			// TODO: make header proper. Add sender, etc.
+            // Try to roll this into framework?
+            String from = "me";
+            MessageHeader header = new MessageHeader(Junction.this,message,from);
+            
+            synchronized (Junction.this) {
+            	Junction.this.triggerMessageReceived(header, message);
+            	for (ConnectedThread conn : mConnections) {
+                	conn.write(bytes, bytes.length);
+                }
+            }
+		} else {
+			mConnectedThread.write(bytes, bytes.length);
+		}
 	}
 
 	@Override
@@ -138,7 +215,82 @@ public class Junction extends edu.stanford.junction.Junction {
 		return mOwner;
 	}
 	
-	
+	private class AcceptThread extends Thread {
+        // The local server socket
+        private final BluetoothServerSocket mmServerSocket;
+
+        public AcceptThread() {
+            BluetoothServerSocket tmp = null;
+            
+            // Create a new listening server socket
+            try {
+                tmp = mBtAdapter.listenUsingRfcommWithServiceRecord(BluetoothSwitchboardConfig.APP_NAME, BluetoothSwitchboardConfig.APP_UUID);
+            } catch (IOException e) {
+                Log.e(TAG, "listen() failed", e);
+            }
+            mmServerSocket = tmp;
+        }
+
+        public void run() {
+            Log.d(TAG, "BEGIN mAcceptThread" + this);
+            setName("AcceptThread");
+            BluetoothSocket socket = null;
+
+            // Listen to the server socket always
+            while (true) {
+                try {
+                    // This is a blocking call and will only return on a
+                    // successful connection or an exception
+                	Log.d(TAG, "waiting for bluetooth client...");
+                    socket = mmServerSocket.accept();
+                    Log.d(TAG, "Client connected!");
+                } catch (IOException e) {
+                    Log.e(TAG, "accept() failed", e);
+                    break;
+                }
+
+                // If a connection was accepted
+                if (socket == null) {
+                	break;
+                }
+                
+                synchronized (Junction.this) {
+                    ConnectedThread conThread = new ConnectedThread(socket);
+                    conThread.start();
+                    mConnections.add(conThread);
+                    
+                    if (mActivityScript != null) {
+	                    JSONObject aScriptObj = new JSONObject();
+	                    JSONObject aScriptMsg = new JSONObject();
+	                    try {
+		                    aScriptObj.put(JX_BT_SYS_MSG, true);
+		                    aScriptObj.put(JX_SCRIPT, mActivityScript.getJSON());
+		                    aScriptMsg.put(NS_JX, aScriptObj);
+	                    } catch (JSONException e) {}
+	                    
+	                    byte[] bytes = aScriptMsg.toString().getBytes();
+	                    conThread.write(bytes,bytes.length);
+                    }
+                }
+            }
+            Log.i(TAG, "END mAcceptThread");
+        }
+
+        public void cancel() {
+            Log.d(TAG, "cancel " + this);
+            try {
+                mmServerSocket.close();
+            } catch (IOException e) {
+                Log.e(TAG, "close() of server failed", e);
+            }
+            
+            for (ConnectedThread conn : mConnections) {
+            	try {
+        			conn.cancel();
+        		} catch (Exception e) {}
+            }
+        }
+    }
 	
     /**
      * This thread runs while attempting to make an outgoing connection
@@ -247,16 +399,35 @@ public class Junction extends edu.stanford.junction.Junction {
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
 
+                    // TODO: make async
+                    if (mIsHub) {
+	                    synchronized (Junction.this) {
+	                    	for (ConnectedThread conn : mConnections) {
+		                    	conn.write(buffer, bytes);
+		                    }
+	                    }
+                    }
+                    
                     // TODO: won't work with something over 1k
                     String jsonStr = new String(buffer,0,bytes);
                     JSONObject json = new JSONObject(jsonStr);
                     
-                    // TODO: make header proper. Add sender, etc.
-                    // Try to role this into framework?
-                    String from = "me";
-                    MessageHeader header = new MessageHeader(Junction.this,json,from);
+                    if (json.has(NS_JX)) {
+                    	JSONObject sys = json.getJSONObject(NS_JX);
+                    	if (sys.has(JX_BT_SYS_MSG)) {
+                        	if (!mIsHub && sys.has(JX_SCRIPT)) {
+                        		mActivityScript = new ActivityScript(sys.getJSONObject(JX_SCRIPT));
+                        	}
+                        	return;
+                    	}
+                    }
                     
+                    // TODO: make header proper. Add sender, etc.
+                    // Try to roll this into framework?
+                    String from = "me";
+                    MessageHeader header = new MessageHeader(Junction.this, json, from);
                     Junction.this.triggerMessageReceived(header, json);
+                    
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
                     //connectionLost();
@@ -271,13 +442,9 @@ public class Junction extends edu.stanford.junction.Junction {
          * Write to the connected OutStream.
          * @param buffer  The bytes to write
          */
-        public void write(byte[] buffer) {
+        public void write(byte[] buffer, int bytes) {
             try {
-                mmOutStream.write(buffer);
-
-                // Share the sent message back to the UI Activity
-                /*mHandler.obtainMessage(BluetoothChat.MESSAGE_WRITE, -1, -1, buffer)
-                        .sendToTarget();*/
+                mmOutStream.write(buffer, 0, bytes);
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
             }
@@ -285,6 +452,11 @@ public class Junction extends edu.stanford.junction.Junction {
 
         public void cancel() {
             try {
+            	synchronized(Junction.this) {
+	            	if (mIsHub) {
+	            		mConnections.remove(this);
+	            	}
+            	}
                 mmSocket.close();
             } catch (IOException e) {
                 Log.e(TAG, "close() of connect socket failed", e);
