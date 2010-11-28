@@ -44,20 +44,27 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 			public void onMessageReceived(MessageHeader header, JSONObject message) {
 				
 			}
-			
-			@Override
-			public void onActivityJoin() {
-				Log.d("junction","joined bt session to pull script");
-			}
 		};
-		Log.d("junction","trying to get script over bluetooth");
+
 		Junction jx = new edu.stanford.junction.provider.bluetooth.Junction(uri,null,actor);
 		
 		// TODO: this is clearly terrible.
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {}
-		ActivityScript script = jx.getActivityScript();
+		ActivityScript script = null;
+		final int MAX_TIME = 10000; // ms
+		final int WAIT = 300; // ms
+		int total = 0;
+		
+		// Set in Junction bluetooth connection thread.
+		// pretty gross.
+		while (script == null && total < MAX_TIME) {
+			try {
+				Thread.sleep(WAIT);
+			} catch (InterruptedException e) {}
+			
+			script = jx.getActivityScript();
+			total += WAIT;
+		}
+		 
 		Log.d("junction","got activity script " + script);
 		actor.leave();
 		return script;
