@@ -35,13 +35,20 @@
     	</exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
       <groupId>android</groupId>
       <artifactId>android</artifactId>
       <version>${android-version}</version>
       <scope>provided</scope>
     </dependency>
- 
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-android</artifactId>
+      <version>1.6.1-RC1</version>
+    </dependency>
+
   </dependencies>
   <build>
     <plugins>
@@ -72,12 +79,12 @@
           <docletPath>/path/to/com/google/doclava/Doclava/0.9/Doclava-0.9.jar</docletPath>
           <doclet>com.google.doclava.Doclava</doclet>
           <additionalparam>
-             -quiet
-             -federate Android http://developer.android.com/reference
-             -federationxml Android http://doclava.googlecode.com/svn/static/api/android-8.xml
-             -federate Junction http://openjunction.github.com/JavaJunction/api/reference
-             -hdf project.name "Junction for Android (v0.6.7)"
-           </additionalparam>
+	    -quiet
+	    -federate Android http://developer.android.com/reference
+	    -federationxml Android http://doclava.googlecode.com/svn/static/api/android-8.xml
+	    -federate Junction http://openjunction.github.com/JavaJunction/api/reference
+	    -hdf project.name "Junction for Android (v0.6.7)"
+	  </additionalparam>
           <useStandardDocletOptions>false</useStandardDocletOptions>
         </configuration>
       </plugin>
