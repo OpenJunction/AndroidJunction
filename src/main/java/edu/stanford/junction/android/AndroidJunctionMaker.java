@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -176,17 +177,6 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	}
 	
 	/**
-	 * Joins a Junction Activity based on the android.app.Activity's bundle.
-	 * 
-	 * @param bundle
-	 * @param actor
-	 * @return
-	 */
-	public Junction newJunction(Activity activity, JunctionActor actor) throws JunctionException{
-		return newJunction(activity.getIntent().getExtras(),actor);
-	}
-	
-	/**
 	 * Junction creator from a bundle passed from
 	 * a Junction Activity Director.
 	 * 
@@ -245,10 +235,39 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		}
 	}
 	
+	public static boolean isJoinable(Intent intent) {
+		if (intent == null || intent.getExtras() == null) return false;
+		return intent.getExtras().containsKey("junctionVersion");
+	}
 	public static boolean isJoinable(Activity a) {
-		if (a.getIntent() == null || a.getIntent().getExtras() == null) return false;
-		if (a.getIntent().getExtras().containsKey("junctionVersion")) return true;
-		return false;
+		return (isJoinable(a.getIntent()));
+	}
+	
+	public static Junction newJunction(Activity a, JunctionActor actor) throws JunctionException {
+		return newJunction(a.getIntent(), actor);
+	}
+	
+	public static Junction newJunction(Intent intent, JunctionActor actor) throws JunctionException {
+		Bundle bundle = intent.getExtras();
+		if (bundle == null ||  !bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION_URI)) {
+			throw new JunctionException("No session uri found.");
+		}
+		
+		URI uri = URI.create(bundle.getString(Intents.EXTRA_ACTIVITY_SESSION_URI));
+		SwitchboardConfig cfg = AndroidJunctionMaker.getDefaultSwitchboardConfig(uri);
+		AndroidJunctionMaker maker = AndroidJunctionMaker.getInstance(cfg);
+		
+		ActivityScript script = null;
+		if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SCRIPT)) {
+			try {
+				JSONObject json = new JSONObject(bundle.getString(Intents.EXTRA_ACTIVITY_SCRIPT));
+				script = new ActivityScript(json);
+			} catch (JSONException e) {
+				throw new JunctionException("Bad activity script in Intent.", e);
+			}
+		}
+		
+		return maker.newJunction(uri, script, actor);
 	}
 	
 	/**
