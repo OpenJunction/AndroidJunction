@@ -158,6 +158,7 @@ public class Junction extends edu.stanford.junction.Junction {
 			} catch (JSONException j) {}
 		}
 		try {
+			jx.put("from", getActor().getActorID());
 			jx.put("targetActor", actorID);
 		} catch (Exception e) {}
 		byte[] bytes = message.toString().getBytes();
@@ -191,6 +192,7 @@ public class Junction extends edu.stanford.junction.Junction {
 			} catch (JSONException j) {}
 		}
 		try {
+			jx.put("from", getActor().getActorID());
 			jx.put("targetRole", role);
 		} catch (Exception e) {}
 		byte[] bytes = message.toString().getBytes();
@@ -215,15 +217,28 @@ public class Junction extends edu.stanford.junction.Junction {
 	@Override
 	public void doSendMessageToSession(JSONObject message) {
 		Log.d(TAG,"writing to session: " + message);
+		JSONObject jx;
+		try {
+			if (message.has(NS_JX)) {
+				jx = message.getJSONObject(NS_JX);
+			} else {
+				jx = new JSONObject();
+				message.put(NS_JX, jx);
+			}
+			jx.put("from", getActor().getActorID());
+		} catch (Exception e ) {
+			// Ignored
+		}
+		
 		byte[] bytes = message.toString().getBytes();
 		
 		if (mIsHub) {
-			// TODO: make header proper. Add sender, etc.
-            // Try to roll this into framework?
-            String from = "me";
-            MessageHeader header = new MessageHeader(Junction.this,message,from);
-            
             synchronized (Junction.this) {
+            	// TODO: make header proper. Add sender, etc.
+                // Try to roll this into framework?
+                String from = getActor().getActorID();
+                MessageHeader header = new MessageHeader(Junction.this,message,from);
+                
             	Junction.this.triggerMessageReceived(header, message);
             	for (ConnectedThread conn : mConnections) {
                 	conn.write(bytes, bytes.length);
@@ -439,6 +454,7 @@ public class Junction extends edu.stanford.junction.Junction {
                     // TODO: won't work with something over 1k
                     String jsonStr = new String(buffer,0,bytes);
                     JSONObject json = new JSONObject(jsonStr);
+                    String from = "[Unknown]";
                     
                     if (json.has(NS_JX)) {
                     	JSONObject sys = json.getJSONObject(NS_JX);
@@ -455,17 +471,19 @@ public class Junction extends edu.stanford.junction.Junction {
                         			 }
                         		 }
                         	}
-                        	json = null;
+                        	continue;
+                    	}
+                    	if (sys.has("targetActor") && 
+                    			!getActor().getActorID().equals(sys.getString("targetActor"))) {
+                    		continue;
+                    	}
+                    	if (sys.has("from")) {
+                    		from = sys.getString("from");
                     	}
                     }
                     
-                    // TODO: make header proper. Add sender, etc.
-                    // Try to roll this into framework?
-                    if (json != null) {
-	                    String from = "me";
-	                    MessageHeader header = new MessageHeader(Junction.this, json, from);
-	                    Junction.this.triggerMessageReceived(header, json);
-                    }
+                    MessageHeader header = new MessageHeader(Junction.this, json, from);
+                    Junction.this.triggerMessageReceived(header, json);
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
                     //connectionLost();
