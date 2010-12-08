@@ -26,6 +26,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.util.Log;
 
 import edu.stanford.junction.Junction;
+import edu.stanford.junction.JunctionException;
 import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.api.messaging.MessageHeader;
@@ -37,7 +38,7 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 	}
 	
 	@Override
-	public ActivityScript getActivityScript(URI uri) {
+	public ActivityScript getActivityScript(URI uri) throws JunctionException {
 		JunctionActor actor = new JunctionActor("scriptpuller") {
 			
 			@Override
@@ -71,7 +72,7 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 	}
 
 	@Override
-	public Junction newJunction(URI uri, ActivityScript script, JunctionActor actor) {
+	public Junction newJunction(URI uri, ActivityScript script, JunctionActor actor) throws JunctionException {
 		return new edu.stanford.junction.provider.bluetooth.Junction(uri,script,actor);
 	}
 

@@ -34,6 +34,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
+import edu.stanford.junction.JunctionException;
 import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.api.messaging.MessageHeader;
@@ -41,6 +42,8 @@ import edu.stanford.junction.api.messaging.MessageHeader;
 public class Junction extends edu.stanford.junction.Junction {
 	private static String TAG = "junction";
 	public static String NS_JX = "jx";
+	public static String JX_JOINED = "joined";
+	public static String JX_CREATOR = "creator";
 	private static String JX_BT_SYS_MSG = "btsysmsg";
 	private static String JX_SCRIPT = "ascript";
 	
@@ -56,13 +59,16 @@ public class Junction extends edu.stanford.junction.Junction {
 	private String mSession;
 	private String mSwitchboard;
 	
-	public Junction(URI uri, ActivityScript script, final JunctionActor actor) {
+	private boolean mIsActivityCreator;
+	private final Object mJoinLock = new Object();
+	private boolean mJoinComplete = false;
+	
+	public Junction(URI uri, ActivityScript script, final JunctionActor actor) throws JunctionException {
 		mActivityScript = script;
 		mUri = uri;		
 		mSwitchboard = uri.getAuthority();
 		
 		setActor(actor);
-		triggerActorJoin(script == null || script.isActivityCreator());
 
 		if (mSwitchboard.equals(mBtAdapter.getAddress())) {
 			Log.d(TAG, "starting new junction hub");
@@ -78,6 +84,24 @@ public class Junction extends edu.stanford.junction.Junction {
 			BluetoothDevice hub = mBtAdapter.getRemoteDevice(mSwitchboard);
 			mConnectThread = new ConnectThread(hub, BluetoothSwitchboardConfig.APP_UUID);
 			mConnectThread.start();
+		}
+		if (mIsHub) {
+			triggerActorJoin(mIsHub);
+		} else {
+			synchronized (mJoinLock) {
+				if (!mJoinComplete) {
+					try {
+						mJoinLock.wait(20000);
+					} catch (InterruptedException e) {
+						// Ignored
+					}
+				}
+				if (mJoinComplete) {
+					triggerActorJoin(mIsActivityCreator);
+				} else {
+					throw new JunctionException("Could not join bluetooth session");
+				}
+			}
 		}
 	}
 	
@@ -259,18 +283,22 @@ public class Junction extends edu.stanford.junction.Junction {
                     conThread.start();
                     mConnections.add(conThread);
                     
-                    if (mActivityScript != null) {
-	                    JSONObject aScriptObj = new JSONObject();
-	                    JSONObject aScriptMsg = new JSONObject();
-	                    try {
-		                    aScriptObj.put(JX_BT_SYS_MSG, true);
-		                    aScriptObj.put(JX_SCRIPT, mActivityScript.getJSON());
-		                    aScriptMsg.put(NS_JX, aScriptObj);
-	                    } catch (JSONException e) {}
+                    JSONObject aScriptObj = new JSONObject();
+                    JSONObject aScriptMsg = new JSONObject();
+                    try {
+	                    aScriptObj.put(JX_BT_SYS_MSG, true);
+	                    aScriptObj.put(JX_JOINED, true);
+	                    if (mActivityScript != null) {
+	                    	aScriptObj.put(JX_SCRIPT, mActivityScript.getJSON());
+	                    }
+	                    // Hub owner is the activity creator; joiner is not.
+	                    aScriptMsg.put(JX_CREATOR, false);
+	                    aScriptMsg.put(NS_JX, aScriptObj);
 	                    
-	                    byte[] bytes = aScriptMsg.toString().getBytes();
-	                    conThread.write(bytes,bytes.length);
-                    }
+                    } catch (JSONException e) {}
+                    
+                    byte[] bytes = aScriptMsg.toString().getBytes();
+                    conThread.write(bytes,bytes.length);
                 }
             }
             Log.i(TAG, "END mAcceptThread");
@@ -414,20 +442,30 @@ public class Junction extends edu.stanford.junction.Junction {
                     
                     if (json.has(NS_JX)) {
                     	JSONObject sys = json.getJSONObject(NS_JX);
-                    	if (sys.has(JX_BT_SYS_MSG)) {
-                        	if (!mIsHub && sys.has(JX_SCRIPT)) {
-                        		mActivityScript = new ActivityScript(sys.getJSONObject(JX_SCRIPT));
+                    	if (sys.has(JX_BT_SYS_MSG) && sys.has(JX_JOINED)) {
+                        	if (!mIsHub) {
+                        		 if (sys.has(JX_SCRIPT)) {
+                        			 mActivityScript = new ActivityScript(sys.getJSONObject(JX_SCRIPT));
+                        		 }
+                        		 if (sys.has(JX_CREATOR)) {
+                        			 synchronized(mJoinLock) {
+                        				 mIsActivityCreator = sys.getBoolean(JX_CREATOR);
+                        				 mJoinComplete = true;
+                        				 mJoinLock.notify();
+                        			 }
+                        		 }
                         	}
-                        	return;
+                        	json = null;
                     	}
                     }
                     
                     // TODO: make header proper. Add sender, etc.
                     // Try to roll this into framework?
-                    String from = "me";
-                    MessageHeader header = new MessageHeader(Junction.this, json, from);
-                    Junction.this.triggerMessageReceived(header, json);
-                    
+                    if (json != null) {
+	                    String from = "me";
+	                    MessageHeader header = new MessageHeader(Junction.this, json, from);
+	                    Junction.this.triggerMessageReceived(header, json);
+                    }
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
                     //connectionLost();
