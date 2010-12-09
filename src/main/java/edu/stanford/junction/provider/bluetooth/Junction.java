@@ -86,7 +86,7 @@ public class Junction extends edu.stanford.junction.Junction {
 			mIsHub = false;
 			mSession = uri.getPath().substring(1);
 			BluetoothDevice hub = mBtAdapter.getRemoteDevice(mSwitchboard);
-			mConnectThread = new ConnectThread(hub, BluetoothSwitchboardConfig.APP_UUID);
+			mConnectThread = new ConnectThread(hub, UUID.fromString(mSession));
 			mConnectThread.start();
 		}
 		if (mIsHub) {
