@@ -95,7 +95,7 @@ public class Junction extends edu.stanford.junction.Junction {
 			synchronized (mJoinLock) {
 				if (!mJoinComplete) {
 					try {
-						mJoinLock.wait(20000);
+						mJoinLock.wait(12000);
 					} catch (InterruptedException e) {
 						// Ignored
 					}
