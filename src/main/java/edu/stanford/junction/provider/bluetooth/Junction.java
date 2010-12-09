@@ -17,7 +17,6 @@
 
 package edu.stanford.junction.provider.bluetooth;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -39,6 +38,7 @@ import edu.stanford.junction.JunctionException;
 import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.api.messaging.MessageHeader;
+import edu.stanford.junction.provider.jx.JsonHelper;
 
 public class Junction extends edu.stanford.junction.Junction {
 	private static String TAG = "junction";
@@ -165,7 +165,6 @@ public class Junction extends edu.stanford.junction.Junction {
 			jx.put("from", getActor().getActorID());
 			jx.put("targetActor", actorID);
 		} catch (Exception e) {}
-		byte[] bytes = message.toString().getBytes();
 		
 		if (mIsHub) {
 			// TODO: make header proper. Add sender, etc.
@@ -178,7 +177,7 @@ public class Junction extends edu.stanford.junction.Junction {
             	Junction.this.triggerMessageReceived(header, message);
             	for (ConnectedThread conn : mConnections) {
             		try {
-            			conn.write(bytes, bytes.length);
+            			conn.sendJSON(message);
             		} catch (IOException e) {
             			mRemoveConnections.add(conn);
             		}
@@ -191,7 +190,7 @@ public class Junction extends edu.stanford.junction.Junction {
             }
 		} else {
 			try {
-				mConnectedThread.write(bytes, bytes.length);
+				mConnectedThread.sendJSON(message);
 			} catch (IOException e) {
 				Log.d(TAG, "Dead connection detected.");
 				disconnect();
@@ -214,7 +213,6 @@ public class Junction extends edu.stanford.junction.Junction {
 			jx.put("from", getActor().getActorID());
 			jx.put("targetRole", role);
 		} catch (Exception e) {}
-		byte[] bytes = message.toString().getBytes();
 		
 		if (mIsHub) {
 			// TODO: make header proper. Add sender, etc.
@@ -227,7 +225,7 @@ public class Junction extends edu.stanford.junction.Junction {
             	Junction.this.triggerMessageReceived(header, message);
             	for (ConnectedThread conn : mConnections) {
             		try {
-            			conn.write(bytes, bytes.length);
+            			conn.sendJSON(message);
             		} catch (IOException e) {
             			mRemoveConnections.add(conn);
             		}
@@ -240,7 +238,7 @@ public class Junction extends edu.stanford.junction.Junction {
             }
 		} else {
 			try {
-				mConnectedThread.write(bytes, bytes.length);
+				mConnectedThread.sendJSON(message);
 			} catch (IOException e) {
 				Log.d(TAG, "Dead connection detected.");
 				disconnect();
@@ -264,8 +262,6 @@ public class Junction extends edu.stanford.junction.Junction {
 			// Ignored
 		}
 		
-		byte[] bytes = message.toString().getBytes();
-		
 		if (mIsHub) {
 			synchronized (Junction.this) {
             	mRemoveConnections.clear();
@@ -274,7 +270,7 @@ public class Junction extends edu.stanford.junction.Junction {
             	Junction.this.triggerMessageReceived(header, message);
             	for (ConnectedThread conn : mConnections) {
             		try {
-            			conn.write(bytes, bytes.length);
+            			conn.sendJSON(message);
             		} catch (IOException e) {
             			mRemoveConnections.add(conn);
             		}
@@ -288,7 +284,7 @@ public class Junction extends edu.stanford.junction.Junction {
 		} else {
 			try {
 				Log.d(TAG, "client is writing " + message.toString());
-				mConnectedThread.write(bytes, bytes.length);
+				mConnectedThread.sendJSON(message);
 			} catch (IOException e) {
 				Log.e(TAG, "could not write message over bluetooth", e);
 				disconnect();
@@ -358,10 +354,9 @@ public class Junction extends edu.stanford.junction.Junction {
 	                    
                     } catch (JSONException e) {}
                     
-                    byte[] bytes = aScriptMsg.toString().getBytes();
                     try {
                     	Log.d(TAG, "Sending welcome packet.");
-                    	conThread.write(bytes,bytes.length);
+                    	conThread.sendJSON(aScriptMsg);
                     	Log.d(TAG, "Done.");
                     } catch (IOException e) {
                     	Log.e(TAG, "Error writing welcome message");
@@ -468,13 +463,14 @@ public class Junction extends edu.stanford.junction.Junction {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
-
+        private final JsonHelper mmJsonHelper;
+        
         public ConnectedThread(BluetoothSocket socket) {
             Log.d(TAG, "create ConnectedThread");
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
-
+            
             // Get the BluetoothSocket input and output streams
             try {
                 tmpIn = socket.getInputStream();
@@ -484,25 +480,26 @@ public class Junction extends edu.stanford.junction.Junction {
             }
 
             mmInStream = tmpIn;
-            mmOutStream = new BufferedOutputStream(tmpOut, 8192);
+            mmOutStream = tmpOut;
+            mmJsonHelper = new JsonHelper(mmInStream, mmOutStream);
         }
 
         public void run() {
             Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[2048];
-            int bytes;
 
             // Keep listening to the InputStream while connected
             while (true) {
                 try {
-                    // Read from the InputStream
-                    bytes = mmInStream.read(buffer);
-                    
+                	JSONObject json = mmJsonHelper.jsonFromStream();
+                	if (json == null) {
+                		throw new IOException("Json object not found");
+                	}
+                	
                     if (mIsHub) {
 	                    mRemoveConnections.clear();
 	                	for (ConnectedThread conn : mConnections) {
 	                		try {
-	                			conn.write(buffer, buffer.length);
+	                			conn.sendJSON(json);
 	                		} catch (IOException e) {
 	                			mRemoveConnections.add(conn);
 	                		}
@@ -514,12 +511,7 @@ public class Junction extends edu.stanford.junction.Junction {
 	                	}
                     }
                     
-                    // TODO: won't work with something over 2k
-                    String jsonStr = new String(buffer,0,bytes);
-                    
-                    Log.d(TAG, "ConnectedThread got message " + jsonStr);
-                    
-                    JSONObject json = new JSONObject(jsonStr);
+                    Log.d(TAG, "ConnectedThread got message " + json);
                     String from = "[Unknown]";
                     
                     if (json.has(NS_JX)) {
@@ -559,14 +551,9 @@ public class Junction extends edu.stanford.junction.Junction {
                 }
             }
         }
-
-        /**
-         * Write to the connected OutStream.
-         * @param buffer  The bytes to write
-         */
-        public void write(byte[] buffer, int bytes) throws IOException {
-            mmOutStream.write(buffer, 0, bytes);
-            mmOutStream.flush();
+        
+        public void sendJSON(JSONObject json) throws IOException {
+        	mmJsonHelper.sendJson(json);
         }
 
         public void cancel() {

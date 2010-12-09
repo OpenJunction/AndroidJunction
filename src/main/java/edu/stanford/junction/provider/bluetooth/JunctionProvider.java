@@ -47,25 +47,11 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 			}
 		};
 
+		Log.d("junction","Trying to get activity script");
 		Junction jx = new edu.stanford.junction.provider.bluetooth.Junction(uri,null,actor);
+		Log.d("junction","It's " + jx.getActivityScript());
 		
-		// TODO: this is clearly terrible.
-		ActivityScript script = null;
-		final int MAX_TIME = 10000; // ms
-		final int WAIT = 300; // ms
-		int total = 0;
-		
-		// Set in Junction bluetooth connection thread.
-		// pretty gross.
-		while (script == null && total < MAX_TIME) {
-			try {
-				Thread.sleep(WAIT);
-			} catch (InterruptedException e) {}
-			
-			script = jx.getActivityScript();
-			total += WAIT;
-		}
-		 
+		ActivityScript script = jx.getActivityScript();		 
 		Log.d("junction","got activity script " + script);
 		actor.leave();
 		return script;
