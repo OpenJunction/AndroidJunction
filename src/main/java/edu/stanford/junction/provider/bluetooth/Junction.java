@@ -167,14 +167,8 @@ public class Junction extends edu.stanford.junction.Junction {
 		} catch (Exception e) {}
 		
 		if (mIsHub) {
-			// TODO: make header proper. Add sender, etc.
-            // Try to roll this into framework?
-            String from = "me";
-            MessageHeader header = new MessageHeader(Junction.this,message,from);
-            
             synchronized (Junction.this) {
             	mRemoveConnections.clear();
-            	Junction.this.triggerMessageReceived(header, message);
             	for (ConnectedThread conn : mConnections) {
             		try {
             			conn.sendJSON(message);
@@ -217,7 +211,7 @@ public class Junction extends edu.stanford.junction.Junction {
 		if (mIsHub) {
 			// TODO: make header proper. Add sender, etc.
             // Try to roll this into framework?
-            String from = "me";
+            String from = getActor().getActorID();
             MessageHeader header = new MessageHeader(Junction.this,message,from);
             
             synchronized (Junction.this) {
