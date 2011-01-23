@@ -39,6 +39,7 @@ import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.api.messaging.MessageHeader;
 import edu.stanford.junction.provider.jx.json.JsonHandler;
+import edu.stanford.junction.provider.jx.json.JsonSocketHandler;
 
 public class Junction extends edu.stanford.junction.Junction {
 	private static String TAG = "junction";
@@ -475,7 +476,7 @@ public class Junction extends edu.stanford.junction.Junction {
 
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
-            mmJsonHelper = new JsonHandler(mmInStream, mmOutStream);
+            mmJsonHelper = new JsonSocketHandler(mmInStream, mmOutStream);
         }
 
         public void run() {
