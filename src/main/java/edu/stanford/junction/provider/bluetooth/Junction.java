@@ -38,7 +38,7 @@ import edu.stanford.junction.JunctionException;
 import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.api.messaging.MessageHeader;
-import edu.stanford.junction.provider.jx.JsonHelper;
+import edu.stanford.junction.provider.jx.json.JsonHandler;
 
 public class Junction extends edu.stanford.junction.Junction {
 	private static String TAG = "junction";
@@ -457,7 +457,7 @@ public class Junction extends edu.stanford.junction.Junction {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
-        private final JsonHelper mmJsonHelper;
+        private final JsonHandler mmJsonHelper;
         
         public ConnectedThread(BluetoothSocket socket) {
             Log.d(TAG, "create ConnectedThread");
@@ -475,7 +475,7 @@ public class Junction extends edu.stanford.junction.Junction {
 
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
-            mmJsonHelper = new JsonHelper(mmInStream, mmOutStream);
+            mmJsonHelper = new JsonHandler(mmInStream, mmOutStream);
         }
 
         public void run() {
