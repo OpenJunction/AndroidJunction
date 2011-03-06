@@ -20,6 +20,8 @@ package edu.stanford.junction.provider.bluetooth;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +34,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.Log;
 
 import edu.stanford.junction.JunctionException;
@@ -62,18 +66,21 @@ public class Junction extends edu.stanford.junction.Junction {
 	private URI mUri;
 	private String mSession;
 	private String mSwitchboard;
+	private BluetoothSwitchboardConfig mConfig;
 	
 	private boolean mIsActivityCreator;
 	private final Object mJoinLock = new Object();
 	private boolean mJoinComplete = false;
 	
-	public Junction(URI uri, ActivityScript script, final JunctionActor actor) throws JunctionException {
+	public Junction(URI uri, ActivityScript script, final JunctionActor actor, 
+			BluetoothSwitchboardConfig config) throws JunctionException {
+		mConfig = config;
 		mActivityScript = script;
 		mUri = uri;		
 		mSwitchboard = uri.getAuthority();
 		
 		setActor(actor);
-
+		Log.d(TAG, "doing bluetooth");
 		if (mSwitchboard.equals(mBtAdapter.getAddress())) {
 			Log.d(TAG, "starting new junction hub");
 			mIsHub = true;
@@ -301,8 +308,7 @@ public class Junction extends edu.stanford.junction.Junction {
             
             // Create a new listening server socket
             try {
-                tmp = mBtAdapter.listenUsingRfcommWithServiceRecord(
-                		BluetoothSwitchboardConfig.APP_NAME, BluetoothSwitchboardConfig.APP_UUID);
+                tmp = getListeningBluetoothServerSocket();
             } catch (IOException e) {
                 Log.e(TAG, "listen() failed", e);
             }
@@ -400,7 +406,7 @@ public class Junction extends edu.stanford.junction.Junction {
             // Get a BluetoothSocket for a connection with the
             // given BluetoothDevice
             try {
-                tmp = mmDevice.createRfcommSocketToServiceRecord(uuid);
+                tmp = createBluetoothSocket(mmDevice, uuid);
             } catch (IOException e) {
                 Log.e(TAG, "create() failed", e);
             }
@@ -565,4 +571,59 @@ public class Junction extends edu.stanford.junction.Junction {
         }
     }
 	
+    private BluetoothServerSocket getListeningBluetoothServerSocket() throws IOException {
+    	
+    	BluetoothServerSocket tmp;
+    	if (mConfig.securePairingRequired() || VERSION.SDK_INT < VERSION_CODES.GINGERBREAD_MR1) {
+    		tmp = mBtAdapter.listenUsingRfcommWithServiceRecord(
+        		BluetoothSwitchboardConfig.APP_NAME, BluetoothSwitchboardConfig.APP_UUID);
+    		Log.d(TAG, "Using secure bluetooth server socket");
+    	} else {
+    		try {
+	    		// compatibility with pre SDK 10 devices
+	    		Method listener = mBtAdapter.getClass()
+	    			.getMethod("listenUsingInsecureRfcommWithServiceRecord", String.class, UUID.class);
+	    		tmp = (BluetoothServerSocket)listener.invoke(mBtAdapter, BluetoothSwitchboardConfig.APP_NAME, BluetoothSwitchboardConfig.APP_UUID);
+	    		Log.d(TAG, "Using insecure bluetooth server socket");
+    		} catch (NoSuchMethodException e) {
+    			Log.wtf(TAG, "listenUsingInsecureRfcommWithServiceRecord not found");
+    			throw new IOException(e);
+    		} catch (InvocationTargetException e) {
+    			Log.wtf(TAG, "listenUsingInsecureRfcommWithServiceRecord not available on mBtAdapter");
+    			throw new IOException(e);
+    		} catch (IllegalAccessException e) {
+    			Log.wtf(TAG, "listenUsingInsecureRfcommWithServiceRecord not available on mBtAdapter");
+    			throw new IOException(e);
+    		}
+    	}
+    	return tmp;
+    }
+    
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device, UUID uuid) 
+    	throws IOException {
+
+    	BluetoothSocket tmp;
+    	if (mConfig.securePairingRequired() || VERSION.SDK_INT < VERSION_CODES.GINGERBREAD_MR1) {
+    		tmp = device.createRfcommSocketToServiceRecord(uuid);
+    		Log.d(TAG, "Using secure bluetooth socket");
+    	} else {
+    		try {
+	    		// compatibility with pre SDK 10 devices
+	    		Method listener = device.getClass()
+	    			.getMethod("createInsecureRfcommSocketToServiceRecord", UUID.class);
+	    		tmp = (BluetoothSocket)listener.invoke(device, uuid);
+	    		Log.d(TAG, "Using insecure bluetooth socket");
+    		} catch (NoSuchMethodException e) {
+    			Log.wtf(TAG, "createInsecureRfcommSocketToServiceRecord not found");
+    			throw new IOException(e);
+    		} catch (InvocationTargetException e) {
+    			Log.wtf(TAG, "createInsecureRfcommSocketToServiceRecord not available on mBtAdapter");
+    			throw new IOException(e);
+    		} catch (IllegalAccessException e) {
+    			Log.wtf(TAG, "createInsecureRfcommSocketToServiceRecord not available on mBtAdapter");
+    			throw new IOException(e);
+    		}
+    	}
+    	return tmp;
+    }
 }

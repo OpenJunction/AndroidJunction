@@ -32,9 +32,10 @@ import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.api.messaging.MessageHeader;
 
 public class JunctionProvider extends edu.stanford.junction.provider.JunctionProvider {
+	final BluetoothSwitchboardConfig mConfig;
 	
 	public JunctionProvider(BluetoothSwitchboardConfig config) {
-		
+		mConfig = config;
 	}
 	
 	@Override
@@ -48,7 +49,7 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 		};
 
 		Log.d("junction","Trying to get activity script");
-		Junction jx = new edu.stanford.junction.provider.bluetooth.Junction(uri,null,actor);
+		Junction jx = new edu.stanford.junction.provider.bluetooth.Junction(uri, null, actor, mConfig);
 		Log.d("junction","It's " + jx.getActivityScript());
 		
 		ActivityScript script = jx.getActivityScript();		 
@@ -59,7 +60,7 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 
 	@Override
 	public Junction newJunction(URI uri, ActivityScript script, JunctionActor actor) throws JunctionException {
-		return new edu.stanford.junction.provider.bluetooth.Junction(uri,script,actor);
+		return new edu.stanford.junction.provider.bluetooth.Junction(uri, script, actor, mConfig);
 	}
 
 	@Override
