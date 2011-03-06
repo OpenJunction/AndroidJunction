@@ -19,6 +19,7 @@ package edu.stanford.junction.provider.bluetooth;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 import org.json.JSONObject;
 
@@ -60,6 +61,7 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 
 	@Override
 	public Junction newJunction(URI uri, ActivityScript script, JunctionActor actor) throws JunctionException {
+		mConfig.setUuid(UUID.fromString(uri.getPath().substring(1)));
 		return new edu.stanford.junction.provider.bluetooth.Junction(uri, script, actor, mConfig);
 	}
 
@@ -67,7 +69,7 @@ public class JunctionProvider extends edu.stanford.junction.provider.JunctionPro
 	public URI generateSessionUri() {
 		try {
 			//String uuid = UUID.randomUUID().toString();
-			String uuid = BluetoothSwitchboardConfig.APP_UUID.toString();
+			String uuid = mConfig.getUuid().toString();
 			String mac = BluetoothAdapter.getDefaultAdapter().getAddress();
 			return new URI("junction://" + mac + "/" + uuid + "#bt");
 		} catch (URISyntaxException e) {

@@ -6,16 +6,26 @@ import edu.stanford.junction.SwitchboardConfig;
 
 public class BluetoothSwitchboardConfig implements SwitchboardConfig {
 	public static String APP_NAME = "junction";
-	public static UUID APP_UUID = UUID.fromString("88db3e60-fa58-11df-8cff-0800200c9a66");
+	//public static UUID APP_UUID = UUID.fromString("88db3e60-fa58-11df-8cff-0800200c9a66");
 	
 	boolean requireSecurePairing = false;
+	UUID mUuid;
 	
 	public BluetoothSwitchboardConfig() {
-		
+		mUuid = UUID.randomUUID();
 	}
 	
 	public BluetoothSwitchboardConfig(boolean requireSecurePairing) {
 		this.requireSecurePairing = requireSecurePairing;
+		mUuid = UUID.randomUUID();
+	}
+	
+	public UUID getUuid() {
+		return mUuid;
+	}
+	
+	protected void setUuid(UUID uuid) {
+		mUuid = uuid;
 	}
 	
 	/**

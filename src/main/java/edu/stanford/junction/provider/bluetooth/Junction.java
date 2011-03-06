@@ -84,7 +84,7 @@ public class Junction extends edu.stanford.junction.Junction {
 		if (mSwitchboard.equals(mBtAdapter.getAddress())) {
 			Log.d(TAG, "starting new junction hub");
 			mIsHub = true;
-			mSession = BluetoothSwitchboardConfig.APP_UUID.toString();
+			mSession = mConfig.getUuid().toString();
 			mConnections = new HashSet<ConnectedThread>();
 			mRemoveConnections = new HashSet<ConnectedThread>();
 			mAcceptThread = new AcceptThread();
@@ -576,14 +576,14 @@ public class Junction extends edu.stanford.junction.Junction {
     	BluetoothServerSocket tmp;
     	if (mConfig.securePairingRequired() || VERSION.SDK_INT < VERSION_CODES.GINGERBREAD_MR1) {
     		tmp = mBtAdapter.listenUsingRfcommWithServiceRecord(
-        		BluetoothSwitchboardConfig.APP_NAME, BluetoothSwitchboardConfig.APP_UUID);
+        		BluetoothSwitchboardConfig.APP_NAME, mConfig.getUuid());
     		Log.d(TAG, "Using secure bluetooth server socket");
     	} else {
     		try {
 	    		// compatibility with pre SDK 10 devices
 	    		Method listener = mBtAdapter.getClass()
 	    			.getMethod("listenUsingInsecureRfcommWithServiceRecord", String.class, UUID.class);
-	    		tmp = (BluetoothServerSocket)listener.invoke(mBtAdapter, BluetoothSwitchboardConfig.APP_NAME, BluetoothSwitchboardConfig.APP_UUID);
+	    		tmp = (BluetoothServerSocket)listener.invoke(mBtAdapter, BluetoothSwitchboardConfig.APP_NAME, mConfig.getUuid());
 	    		Log.d(TAG, "Using insecure bluetooth server socket");
     		} catch (NoSuchMethodException e) {
     			Log.wtf(TAG, "listenUsingInsecureRfcommWithServiceRecord not found");
