@@ -71,6 +71,7 @@ public class Junction extends edu.stanford.junction.Junction {
 	private boolean mIsActivityCreator;
 	private final Object mJoinLock = new Object();
 	private boolean mJoinComplete = false;
+	private static final boolean DBG = false;
 	
 	public Junction(URI uri, ActivityScript script, final JunctionActor actor, 
 			BluetoothSwitchboardConfig config) throws JunctionException {
@@ -80,7 +81,7 @@ public class Junction extends edu.stanford.junction.Junction {
 		mSwitchboard = uri.getAuthority();
 		
 		setActor(actor);
-		Log.d(TAG, "doing bluetooth");
+		if (DBG) Log.d(TAG, "doing bluetooth");
 		if (mSwitchboard.equals(mBtAdapter.getAddress())) {
 			Log.d(TAG, "starting new junction hub");
 			mIsHub = true;
@@ -185,7 +186,7 @@ public class Junction extends edu.stanford.junction.Junction {
             		}
                 }
             	if (mRemoveConnections.size() > 0) {
-            		Log.d(TAG, "Removing " + mRemoveConnections.size() + " dead connections.");
+            		if (DBG) Log.d(TAG, "Removing " + mRemoveConnections.size() + " dead connections.");
             		mConnections.removeAll(mRemoveConnections);
             		mRemoveConnections.clear();
             	}
@@ -194,7 +195,7 @@ public class Junction extends edu.stanford.junction.Junction {
 			try {
 				mConnectedThread.sendJSON(message);
 			} catch (IOException e) {
-				Log.d(TAG, "Dead connection detected.");
+				if (DBG) Log.d(TAG, "Dead connection detected.");
 				disconnect();
 			}
 		}
@@ -233,7 +234,7 @@ public class Junction extends edu.stanford.junction.Junction {
             		}
                 }
             	if (mRemoveConnections.size() > 0) {
-            		Log.d(TAG, "Removing " + mRemoveConnections.size() + " dead connections.");
+            		if (DBG) Log.d(TAG, "Removing " + mRemoveConnections.size() + " dead connections.");
             		mConnections.removeAll(mRemoveConnections);
             		mRemoveConnections.clear();
             	}
@@ -250,7 +251,7 @@ public class Junction extends edu.stanford.junction.Junction {
 
 	@Override
 	public void doSendMessageToSession(JSONObject message) {
-		Log.d(TAG,"writing to session: " + message);
+		if (DBG) Log.d(TAG,"writing to session: " + message);
 		JSONObject jx;
 		try {
 			if (message.has(NS_JX)) {
@@ -285,7 +286,7 @@ public class Junction extends edu.stanford.junction.Junction {
             }
 		} else {
 			try {
-				Log.d(TAG, "client is writing " + message.toString());
+				if (DBG) Log.d(TAG, "client is writing " + message.toString());
 				mConnectedThread.sendJSON(message);
 			} catch (IOException e) {
 				Log.e(TAG, "could not write message over bluetooth", e);
@@ -316,7 +317,7 @@ public class Junction extends edu.stanford.junction.Junction {
         }
 
         public void run() {
-            Log.d(TAG, "BEGIN mAcceptThread" + this);
+        	if (DBG) Log.d(TAG, "BEGIN mAcceptThread" + this);
             setName("AcceptThread");
             BluetoothSocket socket = null;
 
@@ -325,11 +326,11 @@ public class Junction extends edu.stanford.junction.Junction {
                 try {
                     // This is a blocking call and will only return on a
                     // successful connection or an exception
-                	Log.d(TAG, "waiting for bluetooth client...");
+                	if (DBG) Log.d(TAG, "waiting for bluetooth client...");
                     socket = mmServerSocket.accept();
-                    Log.d(TAG, "Client connected!");
+                    if (DBG) Log.d(TAG, "Client connected!");
                 } catch (IOException e) {
-                    Log.e(TAG, "accept() failed", e);
+                	if (DBG) Log.e(TAG, "accept() failed", e);
                     break;
                 }
 
@@ -356,9 +357,9 @@ public class Junction extends edu.stanford.junction.Junction {
                     } catch (JSONException e) {}
                     
                     try {
-                    	Log.d(TAG, "Sending welcome packet.");
+                    	if (DBG) Log.d(TAG, "Sending welcome packet.");
                     	conThread.sendJSON(aScriptMsg);
-                    	Log.d(TAG, "Done.");
+                    	if (DBG) Log.d(TAG, "Done.");
                     } catch (IOException e) {
                     	Log.e(TAG, "Error writing welcome message");
                     	return;
@@ -368,11 +369,11 @@ public class Junction extends edu.stanford.junction.Junction {
                     mConnections.add(conThread);
                 }
             }
-            Log.i(TAG, "END mAcceptThread");
+            if (DBG) Log.i(TAG, "END mAcceptThread");
         }
 
         public void cancel() {
-            Log.d(TAG, "cancel " + this);
+        	if (DBG) Log.d(TAG, "cancel " + this);
             try {
                 mmServerSocket.close();
             } catch (IOException e) {
@@ -414,7 +415,7 @@ public class Junction extends edu.stanford.junction.Junction {
         }
 
         public void run() {
-            Log.i(TAG, "BEGIN mConnectThread");
+        	if (DBG) Log.i(TAG, "BEGIN mConnectThread");
             setName("ConnectThread");
 
             // Always cancel discovery because it will slow down a connection
@@ -424,7 +425,7 @@ public class Junction extends edu.stanford.junction.Junction {
             try {
                 // This is a blocking call and will only return on a
                 // successful connection or an exception
-            	Log.d(TAG,"trying to connect socket for " + mmDevice.getAddress() + " at " + mmSession);
+            	if (DBG) Log.d(TAG,"trying to connect socket for " + mmDevice.getAddress() + " at " + mmSession);
                 mmSocket.connect();
             } catch (IOException e) {
                 Log.e(TAG,"failed to connect to bluetooth socket", e);
@@ -436,7 +437,7 @@ public class Junction extends edu.stanford.junction.Junction {
                 
                 return;
             }
-            Log.d(TAG,"socket connected");
+            if (DBG) Log.d(TAG,"socket connected");
             // Reset the ConnectThread because we're done
             synchronized (Junction.this) {
                 mConnectThread = null;
@@ -467,7 +468,7 @@ public class Junction extends edu.stanford.junction.Junction {
         private final JsonHandler mmJsonHelper;
         
         public ConnectedThread(BluetoothSocket socket) {
-            Log.d(TAG, "create ConnectedThread");
+        	if (DBG) Log.d(TAG, "create ConnectedThread");
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -486,7 +487,7 @@ public class Junction extends edu.stanford.junction.Junction {
         }
 
         public void run() {
-            Log.i(TAG, "BEGIN mConnectedThread");
+        	if (DBG) Log.i(TAG, "BEGIN mConnectedThread");
 
             // Keep listening to the InputStream while connected
             while (true) {
@@ -506,13 +507,13 @@ public class Junction extends edu.stanford.junction.Junction {
 	                		}
 	                    }
 	                	if (mRemoveConnections.size() > 0) {
-	                		Log.d(TAG, "Removing " + mRemoveConnections.size() + " dead connections.");
+	                		if (DBG) Log.d(TAG, "Removing " + mRemoveConnections.size() + " dead connections.");
 	                		mConnections.removeAll(mRemoveConnections);
 	                		mRemoveConnections.clear();
 	                	}
                     }
                     
-                    Log.d(TAG, "ConnectedThread got message " + json);
+                    if (DBG) Log.d(TAG, "ConnectedThread got message " + json);
                     String from = "[Unknown]";
                     
                     if (json.has(NS_JX)) {
@@ -577,7 +578,7 @@ public class Junction extends edu.stanford.junction.Junction {
     	if (mConfig.securePairingRequired() || VERSION.SDK_INT < VERSION_CODES.GINGERBREAD_MR1) {
     		tmp = mBtAdapter.listenUsingRfcommWithServiceRecord(
         		BluetoothSwitchboardConfig.APP_NAME, mConfig.getUuid());
-    		Log.d(TAG, "Using secure bluetooth server socket");
+    		if (DBG) Log.d(TAG, "Using secure bluetooth server socket");
     	} else {
     		try {
 	    		// compatibility with pre SDK 10 devices
@@ -605,14 +606,14 @@ public class Junction extends edu.stanford.junction.Junction {
     	BluetoothSocket tmp;
     	if (mConfig.securePairingRequired() || VERSION.SDK_INT < VERSION_CODES.GINGERBREAD_MR1) {
     		tmp = device.createRfcommSocketToServiceRecord(uuid);
-    		Log.d(TAG, "Using secure bluetooth socket");
+    		if (DBG) Log.d(TAG, "Using secure bluetooth socket");
     	} else {
     		try {
 	    		// compatibility with pre SDK 10 devices
 	    		Method listener = device.getClass()
 	    			.getMethod("createInsecureRfcommSocketToServiceRecord", UUID.class);
 	    		tmp = (BluetoothSocket)listener.invoke(device, uuid);
-	    		Log.d(TAG, "Using insecure bluetooth socket");
+	    		if (DBG) Log.d(TAG, "Using insecure bluetooth socket");
     		} catch (NoSuchMethodException e) {
     			Log.wtf(TAG, "createInsecureRfcommSocketToServiceRecord not found");
     			throw new IOException(e);
