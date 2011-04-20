@@ -451,4 +451,12 @@ public class AndroidJunctionMaker extends JunctionMaker {
 		}
 		return JunctionMaker.getDefaultSwitchboardConfig(uri);
 	}
+
+	/**
+	 * Binds a {@link JunctionActor} to a session URI, using the default
+	 * switchboard for that URI.
+	 */
+	public static Junction bind(URI uri, JunctionActor actor) throws JunctionException {
+		return AndroidJunctionMaker.getInstance(AndroidJunctionMaker.getDefaultSwitchboardConfig(uri)).newJunction(uri, actor);
+	}
 }
