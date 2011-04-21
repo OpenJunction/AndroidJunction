@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta name="description" content="Javadoc API documentation for Junction for Android (v0.6.7)." />
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.ico" />
+<title>
+
+  AndroidJunctionMaker.Intents
+
+
+| Junction for Android (v0.6.7)
+
+</title>
+<link href="../../../../../assets/doclava-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../assets/customizations.css" rel="stylesheet" type="text/css" />
+<script src="../../../../../assets/search_autocomplete.js" type="text/javascript"></script>
+<script src="../../../../../assets/jquery-resizable.min.js" type="text/javascript"></script>
+<script src="../../../../../assets/doclava-developer-docs.js" type="text/javascript"></script>
+<script src="../../../../../assets/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  setToRoot("../../../../", "../../../../../assets/");
+</script>
+<script src="../../../../../assets/doclava-developer-reference.js" type="text/javascript"></script>
+<script src="../../../../../assets/navtree_data.js" type="text/javascript"></script>
+<script src="../../../../../assets/customizations.js" type="text/javascript"></script>
+<noscript>
+  <style type="text/css">
+    html,body{overflow:auto;}
+    #body-content{position:relative; top:0;}
+    #doc-content{overflow:visible;border-left:3px solid #666;}
+    #side-nav{padding:0;}
+    #side-nav .toggle-list ul {display:block;}
+    #resize-packages-nav{border-bottom:3px solid #666;}
+  </style>
+</noscript>
+</head>
+
+<body class="">
+
+<div id="header">
+    <div id="headerLeft">
+    
+      <span id="masthead-title">Junction for Android (v0.6.7)</span>
+    
+    </div>
+    <div id="headerRight">
+      
+  <div id="search" >
+      <div id="searchForm">
+          <form accept-charset="utf-8" class="gsc-search-box" 
+                onsubmit="return submit_search()">
+            <table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody>
+                <tr>
+                  <td class="gsc-input">
+                    <input id="search_autocomplete" class="gsc-input" type="text" size="33" autocomplete="off"
+                      title="search developer docs" name="q"
+                      value="search developer docs"
+                      onFocus="search_focus_changed(this, true)"
+                      onBlur="search_focus_changed(this, false)"
+                      onkeydown="return search_changed(event, true, '../../../../')"
+                      onkeyup="return search_changed(event, false, '../../../../')" />
+                  <div id="search_filtered_div" class="no-display">
+                      <table id="search_filtered" cellspacing=0>
+                      </table>
+                  </div>
+                  </td>
+                  <td class="gsc-search-button">
+                    <input type="submit" value="Search" title="search" id="search-button" class="gsc-search-button" />
+                  </td>
+                  <td class="gsc-clear-button">
+                    <div title="clear results" class="gsc-clear-button">&nbsp;</div>
+                  </td>
+                </tr></tbody>
+              </table>
+          </form>
+      </div><!-- searchForm -->
+  </div><!-- search -->
+      
+    </div>
+</div><!-- header -->
+
+
+  <div class="g-section g-tpl-240" id="body-content">
+    <div class="g-unit g-first side-nav-resizable" id="side-nav">
+      <div id="swapper">
+        <div id="nav-panels">
+          <div id="resize-packages-nav">
+            <div id="packages-nav">
+              <div id="index-links"><nobr>
+                <a href="../../../../packages.html"  >Package Index</a> | 
+                <a href="../../../../classes.html" >Class Index</a></nobr>
+              </div>
+              <ul>
+                
+    <li class="selected api apilevel-">
+  <a href="../../../../edu/stanford/junction/android/package-summary.html">edu.stanford.junction.android</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../edu/stanford/junction/provider/bluetooth/package-summary.html">edu.stanford.junction.provider.bluetooth</a></li>
+              </ul><br/>
+            </div> <!-- end packages -->
+          </div> <!-- end resize-packages -->
+          <div id="classes-nav">
+            <ul>
+              
+              
+    <li><h2>Classes</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/AndroidJunctionMaker.html">AndroidJunctionMaker</a></li>
+          <li class="selected api apilevel-"><a href="../../../../edu/stanford/junction/android/AndroidJunctionMaker.Intents.html">AndroidJunctionMaker.Intents</a></li>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html">IntentLauncher</a></li>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/WaitForInternet.html">WaitForInternet</a></li>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/WaitForInternetCallback.html">WaitForInternetCallback</a></li>
+      </ul>
+    </li>
+              
+              
+              
+              
+            </ul><br/>
+          </div><!-- end classes -->
+        </div><!-- end nav-panels -->
+        <div id="nav-tree" style="display:none">
+          <div id="index-links"><nobr>
+            <a href="../../../../packages.html"  >Package Index</a> | 
+            <a href="../../../../classes.html" >Class Index</a></nobr>
+          </div>
+        </div><!-- end nav-tree -->
+      </div><!-- end swapper -->
+    </div> <!-- end side-nav -->
+    <script>
+      if (!isMobile) {
+        $("<a href='#' id='nav-swap' onclick='swapNav();return false;' style='font-size:10px;line-height:9px;margin-left:1em;text-decoration:none;'><span id='tree-link'>Use Tree Navigation</span><span id='panel-link' style='display:none'>Use Panel Navigation</span></a>").appendTo("#side-nav");
+        chooseDefaultNav();
+        if ($("#nav-tree").is(':visible')) {
+          init_default_navtree("../../../../");
+        } else {
+          addLoadEvent(function() {
+            scrollIntoView("packages-nav");
+            scrollIntoView("classes-nav");
+          });
+        }
+        $("#swapper").css({borderBottom:"2px solid #aaa"});
+      } else {
+        swapNav(); // tree view should be used on mobile
+      }
+    </script>
+
+
+
+<div class="g-unit" id="doc-content">
+
+<div id="api-info-block">
+
+
+
+  
+   
+  
+  
+  
+  
+
+
+<div class="sum-details-links">
+
+<div>
+<a href="AndroidJunctionMaker.Intents.html">View Documentation</a>
+</div>
+
+
+</div><!-- end sum-details-links -->
+<div class="api-level">
+  
+
+
+  
+  
+
+</div>
+</div><!-- end api-info-block -->
+
+
+<!-- ======== START OF CLASS DATA ======== -->
+
+<div id="jd-header">
+    public
+    static 
+     
+    
+    class
+<h1>AndroidJunctionMaker.Intents</h1>
+
+
+
+  
+    extends <a href="http://developer.android.com/reference/java/lang/Object.html">Object</a><br/>
+  
+  
+  
+
+  
+  
+  
+
+
+</div><!-- end header -->
+<div id="jd-content">
+  <pre class="prettyprint">
+/*
+ * Copyright (C) 2010 Stanford University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+package edu.stanford.junction.android;
+
+import java.net.URI;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
+import edu.stanford.junction.Junction;
+import edu.stanford.junction.JunctionException;
+import edu.stanford.junction.JunctionMaker;
+import edu.stanford.junction.SwitchboardConfig;
+import edu.stanford.junction.api.activity.ActivityScript;
+import edu.stanford.junction.api.activity.Cast;
+import edu.stanford.junction.api.activity.JunctionActor;
+import edu.stanford.junction.provider.JunctionProvider;
+import edu.stanford.junction.provider.bluetooth.BluetoothSwitchboardConfig;
+
+// TODO:
+// Class hierarchy is badly broken.
+// Split out platform methods and impl methods.
+// For now, extending XMPP.JunctionMaker.
+public class AndroidJunctionMaker extends JunctionMaker {
+	
+	public static final int JUNCTION_VERSION = 1;
+	
+	public static class Intents {
+		public static final String ACTION_JOIN = "junction.intent.action.JOIN";
+		public static final String ACTION_CAST = "junction.intent.action.CAST";
+		
+		public static final String EXTRA_CAST_ROLES = "castingRoles";
+		public static final String EXTRA_CAST_DIRECTORS = "castingDirectors";
+		public static final String EXTRA_CAST_PACKAGE = "joiningPackage";
+		public static final String EXTRA_CAST_OR_JOIN = "castOrJoin";
+		public static final String EXTRA_ACTIVITY_SESSION_URI = "invitationURI";
+		public static final String EXTRA_ACTIVITY_SCRIPT = "activityScript";
+		public static final String EXTRA_JUNCTION_VERSION = "junctionVersion";
+		
+		public static final String PACKAGE_DIRECTOR = "edu.stanford.prpl.junction.applaunch";
+		
+		public static final int ALLOW_CAST=1;
+		public static final int ALLOW_JOIN=2;
+	}
+	
+	private static String JX_LAUNCHER_NAME = "Activity Director";
+	private static String JX_LAUNCHER_URL = "http://prpl.stanford.edu/android/JunctionAppLauncher.apk";
+	private static String JX_LAUNCHER_PACKAGE = Intents.PACKAGE_DIRECTOR;
+	
+	public static final URI CASTING_DIRECTOR = JunctionMaker.CASTING_DIRECTOR;
+		
+	public static AndroidJunctionMaker getInstance(SwitchboardConfig config) {
+		AndroidJunctionMaker maker = new AndroidJunctionMaker();
+		maker.mProvider = maker.getProvider(config);
+		maker.mProvider.setJunctionMaker(maker);
+		return maker;
+	}
+	
+	private AndroidJunctionMaker() {
+		
+	}
+	
+	
+	public URI getInvitationForActivity(Activity activity) {
+		try {
+			return new URI(activity.getIntent().getExtras().getString("invitationURI"));
+		} catch (Exception e) {
+			Log.e("junction","could not get invitation URI",e);
+			return null;
+		}
+	}
+	
+	/**
+	 * Returns an Intent than can be used to join a Junction activity.
+	 * If you want a specific class to handle this intent,
+	 * you can specify the package/class on the returned
+	 * Intent before using it to start an activity.
+	 * 
+	 * @param junctionInvitation
+	 * @return
+	 */
+	public static Intent getIntentForActivityJoin(URI junctionInvitation) {
+		Intent launchIntent = new Intent(Intents.ACTION_JOIN);
+		launchIntent.putExtra("junctionVersion", 1);
+		//launchIntent.putExtra("activityDescriptor", invitation.toString());
+		// TODO: keep URI?
+		launchIntent.putExtra(Intents.EXTRA_ACTIVITY_SESSION_URI, junctionInvitation.toString());
+		
+		return launchIntent;
+	}
+	
+
+	/**
+	 * Sends an intent to complete the casting of an activity.
+	 * 
+	 * The result will be an Intent issued, of action ACTION_JOIN.
+	 * The Intent will be populated with casting information, and should
+	 * be handled in your android.app.Activity:
+	 * 
+	 * if AndroidJunctionMaker.isJoinable(this) {
+	 * 	  maker.newJunction(this,mActor);
+	 * }
+	 * 
+	 * @param context
+	 * @param script
+	 * @param support
+	 */
+	public static void castActivity(Context context, ActivityScript script, Cast support) {
+		castActivityHelper(context,script,support,Intents.ALLOW_CAST);
+	}
+	
+	/**
+	 * Casts or joins an activity, as
+	 * decided by the Activity Director.
+	 * If the Director detects the user is launching
+	 * to a generic target (Eg a director's activity)
+	 * then it will start a new activity.
+	 * If the user pairs with an existing activity,
+	 * then the user is joined to that session with 
+	 * no casting done.
+	 * 
+	 * @param context
+	 * @param script
+	 * @param support
+	 */
+	public static void castOrJoinActivity(Context context, ActivityScript script, Cast support) {
+		castActivityHelper(context,script,support,Intents.ALLOW_CAST|Intents.ALLOW_JOIN);
+	}
+	
+	
+	private static void castActivityHelper(Context context, ActivityScript script, Cast support, int castOrJoin) {
+		Intent castingIntent = new Intent(Intents.ACTION_CAST);
+
+		if (support != null &amp;&amp; support.size() &gt; 0) {
+			int size=support.size();
+			String[] castingRoles = new String[size];
+			String[] castingDirectors = new String[size];
+			
+			for (int i=0;i&lt;size;i++) {
+				castingRoles[i] = support.getRole(i);
+				castingDirectors[i] = support.getDirector(i).toString();
+			}
+			
+			castingIntent.putExtra(Intents.EXTRA_CAST_ROLES, castingRoles);
+			castingIntent.putExtra(Intents.EXTRA_CAST_DIRECTORS, castingDirectors);
+		}
+		
+		castingIntent.putExtra(Intents.EXTRA_CAST_PACKAGE, context.getPackageName());
+		castingIntent.putExtra(Intents.EXTRA_ACTIVITY_SCRIPT, script.getJSON().toString());
+		castingIntent.putExtra(Intents.EXTRA_CAST_OR_JOIN, castOrJoin);
+		context.startActivity(castingIntent);
+	}
+	
+	/**
+	 * Junction creator from a bundle passed from
+	 * a Junction Activity Director.
+	 * 
+	 * The bundle may contain the URI of an existing activity session
+	 * or an activity script for creating a new session. It may also
+	 * contain casting information.
+	 * 
+	 * @param bundle
+	 * @param actor
+	 * @return
+	 */
+	public Junction newJunction(Bundle bundle, JunctionActor actor) throws JunctionException{
+		if (bundle == null || !bundle.containsKey(Intents.EXTRA_JUNCTION_VERSION)) {
+			Log.d("junction","Could not launch from bundle (" + bundle + ")");
+			return null;
+		}
+		
+		try{
+			if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION_URI)) {
+				// TODO: pass both activity script and uri if available?
+				// TODO: still support casting?
+				Log.d("junction","joining existing session " + bundle.getString(Intents.EXTRA_ACTIVITY_SESSION_URI));
+				URI uri = new URI(bundle.getString(Intents.EXTRA_ACTIVITY_SESSION_URI));
+				Junction jx = newJunction(uri,actor);
+				return jx;
+			} else {
+				JSONObject desc = new JSONObject(bundle.getString(Intents.EXTRA_ACTIVITY_SCRIPT));
+				ActivityScript activityDesc = new ActivityScript(desc);
+				
+				Junction jx;
+				if (bundle.containsKey(Intents.EXTRA_CAST_ROLES)) {
+					Log.d("junction","casting roles");
+					String[] aroles = bundle.getStringArray(AndroidJunctionMaker.Intents.EXTRA_CAST_ROLES);
+					String[] adirectors = bundle.getStringArray(AndroidJunctionMaker.Intents.EXTRA_CAST_DIRECTORS);
+					
+					List&lt;String&gt;roles = Arrays.asList(aroles);
+					List&lt;URI&gt;directors = new LinkedList&lt;URI&gt;();
+					for (int i=0;i&lt;adirectors.length;i++) {
+						directors.add(new URI(adirectors[i]));
+					}
+					Log.d("junction","going to request casting for " + directors.size() + " roles");
+					Cast support = new Cast(roles,directors);
+					jx = newJunction(activityDesc,actor,support);
+				} else {
+					jx = newJunction(activityDesc,actor);
+				}
+				return jx;
+			}
+		}
+		catch(JunctionException e){
+			throw e;
+		}
+		catch(Exception e){
+			e.printStackTrace(System.err);
+			throw new JunctionException(e);
+		}
+	}
+	
+	public static boolean isJoinable(Intent intent) {
+		if (intent == null || intent.getExtras() == null) return false;
+		return intent.getExtras().containsKey("junctionVersion");
+	}
+	public static boolean isJoinable(Activity a) {
+		return (isJoinable(a.getIntent()));
+	}
+	
+	public static Junction newJunction(Activity a, JunctionActor actor) throws JunctionException {
+		return newJunction(a.getIntent(), actor);
+	}
+	
+	public static Junction newJunction(Intent intent, JunctionActor actor) throws JunctionException {
+		Bundle bundle = intent.getExtras();
+		if (bundle == null ||  !bundle.containsKey(Intents.EXTRA_ACTIVITY_SESSION_URI)) {
+			throw new JunctionException("No session uri found.");
+		}
+		
+		URI uri = URI.create(bundle.getString(Intents.EXTRA_ACTIVITY_SESSION_URI));
+		SwitchboardConfig cfg = AndroidJunctionMaker.getDefaultSwitchboardConfig(uri);
+		AndroidJunctionMaker maker = AndroidJunctionMaker.getInstance(cfg);
+		
+		ActivityScript script = null;
+		if (bundle.containsKey(Intents.EXTRA_ACTIVITY_SCRIPT)) {
+			try {
+				JSONObject json = new JSONObject(bundle.getString(Intents.EXTRA_ACTIVITY_SCRIPT));
+				script = new ActivityScript(json);
+			} catch (JSONException e) {
+				throw new JunctionException("Bad activity script in Intent.", e);
+			}
+		}
+		
+		return maker.newJunction(uri, script, actor);
+	}
+	
+	/**
+	 * Finds a pre-existing Junction activity by scanning for a QR code.
+	 * @param context
+	 */
+	public static void findActivityByScan(final Activity activity) {
+		WaitForInternetCallback callback =
+			new WaitForInternetCallback(activity) {
+				@Override
+				public void onConnectionFailure() {
+					activity.finish();
+				}
+			
+				@Override
+				public void onConnectionSuccess() {
+					Intent intent = new Intent("junction.intent.action.join.SCAN");
+					intent.putExtra("package", activity.getPackageName());
+					IntentLauncher.launch(activity, 
+										  intent,
+										  "edu.stanford.prpl.junction.applaunch",
+										  "http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
+										  "Activity Director");
+				}
+			};
+		
+		try {
+			WaitForInternet.setCallback(callback);
+		} catch (SecurityException e) {
+			Log.w("junction","Could not check network state. If you'd like this functionality, please add the permission: android.permission.ACCESS_NETWORK_STATE", e);
+			callback.onConnectionSuccess();
+		}
+	}
+	
+	/**
+	 * Launch the Activity Director to join an existing
+	 * Junction activity by some user-specified method.
+	 * 
+	 * @param context
+	 */
+	public static void joinActivity(Context context) {
+		Intent intent = new Intent("junction.intent.action.join.ANY");
+		intent.putExtra("package", context.getPackageName());
+		IntentLauncher.launch(context, 
+							  intent,
+							  "edu.stanford.prpl.junction.applaunch",
+							  "http://prpl.stanford.edu/android/JunctionAppLauncher.apk",
+							  "Activity Director");
+	}
+	
+	/**
+	 * Invites another actor by some unspecified means.
+	 * @param context
+	 * @param Junction
+	 * @param role
+	 */
+	public void inviteActor(Context context, Junction junction, String role) {
+		Intent intent = new Intent("junction.intent.action.invite.ANY");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("uri", junction.getInvitationURI(role).toString());
+		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
+		
+		IntentLauncher.launch(context, 
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
+	}
+	
+	
+	/**
+	 * Invites another actor by some unspecified means.
+	 * @param context
+	 * @param Junction
+	 * @param role
+	 */
+	public void inviteActor(Context context, URI invitation) {
+		Intent intent = new Intent("junction.intent.action.invite.ANY");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("uri", invitation.toString());
+		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
+		
+		IntentLauncher.launch(context, 
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
+	}
+	
+	/**
+	 * Invites an actor to an activity by presenting a QR code on screen. 
+	 * @param context
+	 * @param junction
+	 * @param role
+	 */
+	public void inviteActorByQR(Context context, Junction junction, String role) {
+		Intent intent = new Intent("junction.intent.action.invite.QR");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("uri", junction.getInvitationURI(role).toString());
+		//intent.putExtra("activityDescriptor", junction.getActivityDescription().getJSON());
+		
+		IntentLauncher.launch(context, 
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
+	}
+	
+	/**
+	 * Scan for a Listening service and send it a 'join activity' request.
+	 * @param context
+	 * @param junction
+	 * @param role
+	 */
+	public void inviteActorByScan(Context context, Junction junction, String role) {
+		Intent intent = new Intent("junction.intent.action.invite.SCAN");
+		intent.putExtra("package", context.getPackageName());
+		intent.putExtra("uri",junction.getInvitationURI(role).toString());
+		//intent.putExtra("activityDescription", junction.getActivityDescription().getJSON().toString());
+		//intent.putExtra("role",role);
+		
+		IntentLauncher.launch(context, 
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
+	}
+	
+	/**
+	 * Send an invitation to join an activity by text message.
+	 * @param context
+	 * @param junction
+	 * @param role
+	 */
+	public void inviteActorBySMS(Context context, Junction junction, String role) {
+		Intent intent = new Intent("junction.intent.action.invite.TEXT");
+        String uri = junction.getInvitationURI(role).toString();
+        intent.putExtra("invitation", uri);
+        
+        IntentLauncher.launch(context, 
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
+	}
+	
+	/**
+	 * Send an invitation to join an activity by text message.
+	 * @param context
+	 * @param junction
+	 * @param role
+	 * @param phoneNumber
+	 */
+	public void inviteActorBySMS(Context context, Junction junction, String role, String phoneNumber) {
+		Intent intent = new Intent("junction.intent.action.invite.TEXT");
+        String uri = junction.getInvitationURI(role).toString();
+        intent.putExtra("invitation", uri);
+        intent.putExtra("phoneNumber",phoneNumber);
+        
+        IntentLauncher.launch(context, 
+							  intent,
+							  JX_LAUNCHER_PACKAGE,
+							  JX_LAUNCHER_URL,
+							  JX_LAUNCHER_NAME);
+	}
+	
+	@Override
+	protected JunctionProvider getProvider(SwitchboardConfig switchboardConfig) {
+		if (switchboardConfig instanceof BluetoothSwitchboardConfig) {
+			return new edu.stanford.junction.provider.bluetooth.JunctionProvider((BluetoothSwitchboardConfig)switchboardConfig);
+		}
+		return super.getProvider(switchboardConfig);
+	}
+	
+	public static SwitchboardConfig getDefaultSwitchboardConfig(URI uri) {
+		String fragment = uri.getFragment();
+		if (fragment != null) {
+			if (fragment.equalsIgnoreCase("bt")) {
+				return new BluetoothSwitchboardConfig();
+			}
+		}
+		return JunctionMaker.getDefaultSwitchboardConfig(uri);
+	}
+
+	/**
+	 * Binds a {@link JunctionActor} to a session URI, using the default
+	 * switchboard for that URI.
+	 */
+	public static Junction bind(URI uri, JunctionActor actor) throws JunctionException {
+		return AndroidJunctionMaker.getInstance(AndroidJunctionMaker.getDefaultSwitchboardConfig(uri)).newJunction(uri, actor);
+	}
+}
+
+  </pre>
+</div>
+<div id="footer">
+Generated by <a href="http://code.google.com/p/doclava/">Doclava</a>.
+</div> <!-- end footer -->
+
+</div> <!-- jd-content -->
+
+</div><!-- end doc-content -->
+
+</div> <!-- end body-content --> 
+
+<script type="text/javascript">
+init(); /* initialize doclava-developer-docs.js */
+</script>
+
+</body>
+</html>

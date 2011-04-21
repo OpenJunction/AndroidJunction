@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta name="description" content="Javadoc API documentation for Junction for Android (v0.6.7)." />
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.ico" />
+<title>
+
+  IntentLauncher
+
+
+| Junction for Android (v0.6.7)
+
+</title>
+<link href="../../../../../assets/doclava-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../assets/customizations.css" rel="stylesheet" type="text/css" />
+<script src="../../../../../assets/search_autocomplete.js" type="text/javascript"></script>
+<script src="../../../../../assets/jquery-resizable.min.js" type="text/javascript"></script>
+<script src="../../../../../assets/doclava-developer-docs.js" type="text/javascript"></script>
+<script src="../../../../../assets/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  setToRoot("../../../../", "../../../../../assets/");
+</script>
+<script src="../../../../../assets/doclava-developer-reference.js" type="text/javascript"></script>
+<script src="../../../../../assets/navtree_data.js" type="text/javascript"></script>
+<script src="../../../../../assets/customizations.js" type="text/javascript"></script>
+<noscript>
+  <style type="text/css">
+    html,body{overflow:auto;}
+    #body-content{position:relative; top:0;}
+    #doc-content{overflow:visible;border-left:3px solid #666;}
+    #side-nav{padding:0;}
+    #side-nav .toggle-list ul {display:block;}
+    #resize-packages-nav{border-bottom:3px solid #666;}
+  </style>
+</noscript>
+</head>
+
+<body class="">
+
+<div id="header">
+    <div id="headerLeft">
+    
+      <span id="masthead-title">Junction for Android (v0.6.7)</span>
+    
+    </div>
+    <div id="headerRight">
+      
+  <div id="search" >
+      <div id="searchForm">
+          <form accept-charset="utf-8" class="gsc-search-box" 
+                onsubmit="return submit_search()">
+            <table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody>
+                <tr>
+                  <td class="gsc-input">
+                    <input id="search_autocomplete" class="gsc-input" type="text" size="33" autocomplete="off"
+                      title="search developer docs" name="q"
+                      value="search developer docs"
+                      onFocus="search_focus_changed(this, true)"
+                      onBlur="search_focus_changed(this, false)"
+                      onkeydown="return search_changed(event, true, '../../../../')"
+                      onkeyup="return search_changed(event, false, '../../../../')" />
+                  <div id="search_filtered_div" class="no-display">
+                      <table id="search_filtered" cellspacing=0>
+                      </table>
+                  </div>
+                  </td>
+                  <td class="gsc-search-button">
+                    <input type="submit" value="Search" title="search" id="search-button" class="gsc-search-button" />
+                  </td>
+                  <td class="gsc-clear-button">
+                    <div title="clear results" class="gsc-clear-button">&nbsp;</div>
+                  </td>
+                </tr></tbody>
+              </table>
+          </form>
+      </div><!-- searchForm -->
+  </div><!-- search -->
+      
+    </div>
+</div><!-- header -->
+
+
+  <div class="g-section g-tpl-240" id="body-content">
+    <div class="g-unit g-first side-nav-resizable" id="side-nav">
+      <div id="swapper">
+        <div id="nav-panels">
+          <div id="resize-packages-nav">
+            <div id="packages-nav">
+              <div id="index-links"><nobr>
+                <a href="../../../../packages.html"  >Package Index</a> | 
+                <a href="../../../../classes.html" >Class Index</a></nobr>
+              </div>
+              <ul>
+                
+    <li class="selected api apilevel-">
+  <a href="../../../../edu/stanford/junction/android/package-summary.html">edu.stanford.junction.android</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../edu/stanford/junction/provider/bluetooth/package-summary.html">edu.stanford.junction.provider.bluetooth</a></li>
+              </ul><br/>
+            </div> <!-- end packages -->
+          </div> <!-- end resize-packages -->
+          <div id="classes-nav">
+            <ul>
+              
+              
+    <li><h2>Classes</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/AndroidJunctionMaker.html">AndroidJunctionMaker</a></li>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/AndroidJunctionMaker.Intents.html">AndroidJunctionMaker.Intents</a></li>
+          <li class="selected api apilevel-"><a href="../../../../edu/stanford/junction/android/IntentLauncher.html">IntentLauncher</a></li>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/WaitForInternet.html">WaitForInternet</a></li>
+          <li class="api apilevel-"><a href="../../../../edu/stanford/junction/android/WaitForInternetCallback.html">WaitForInternetCallback</a></li>
+      </ul>
+    </li>
+              
+              
+              
+              
+            </ul><br/>
+          </div><!-- end classes -->
+        </div><!-- end nav-panels -->
+        <div id="nav-tree" style="display:none">
+          <div id="index-links"><nobr>
+            <a href="../../../../packages.html"  >Package Index</a> | 
+            <a href="../../../../classes.html" >Class Index</a></nobr>
+          </div>
+        </div><!-- end nav-tree -->
+      </div><!-- end swapper -->
+    </div> <!-- end side-nav -->
+    <script>
+      if (!isMobile) {
+        $("<a href='#' id='nav-swap' onclick='swapNav();return false;' style='font-size:10px;line-height:9px;margin-left:1em;text-decoration:none;'><span id='tree-link'>Use Tree Navigation</span><span id='panel-link' style='display:none'>Use Panel Navigation</span></a>").appendTo("#side-nav");
+        chooseDefaultNav();
+        if ($("#nav-tree").is(':visible')) {
+          init_default_navtree("../../../../");
+        } else {
+          addLoadEvent(function() {
+            scrollIntoView("packages-nav");
+            scrollIntoView("classes-nav");
+          });
+        }
+        $("#swapper").css({borderBottom:"2px solid #aaa"});
+      } else {
+        swapNav(); // tree view should be used on mobile
+      }
+    </script>
+
+
+
+<div class="g-unit" id="doc-content">
+
+<div id="api-info-block">
+
+
+
+  
+   
+  
+  
+  
+  
+
+
+<div class="sum-details-links">
+
+<div>
+<a href="IntentLauncher.html">View Documentation</a>
+</div>
+
+
+</div><!-- end sum-details-links -->
+<div class="api-level">
+  
+
+
+  
+  
+
+</div>
+</div><!-- end api-info-block -->
+
+
+<!-- ======== START OF CLASS DATA ======== -->
+
+<div id="jd-header">
+    public
+     
+    final 
+    
+    class
+<h1>IntentLauncher</h1>
+
+
+
+  
+    extends <a href="http://developer.android.com/reference/java/lang/Object.html">Object</a><br/>
+  
+  
+  
+
+  
+  
+  
+
+
+</div><!-- end header -->
+<div id="jd-content">
+  <pre class="prettyprint">
+/*
+ * Copyright (C) 2010 Stanford University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+/*
+ * Copyright 2009 ZXing authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package edu.stanford.junction.android;
+
+import java.util.List;
+
+import android.app.AlertDialog;
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
+import android.util.Log;
+
+/**
+ * &lt;p&gt;A utility class which helps launch a remote intent, that may or may not be available on the user's system.
+ *
+ * &lt;p&gt;Integration is essentially as easy as calling {@link #initiateScan(Activity, componentName, appName)} and waiting
+ * for the result in your app.&lt;/p&gt;
+ *
+ * &lt;p&gt;There are a few steps to using this integration. First, your {@link Activity} must implement
+ * the method {@link Activity#onActivityResult(int, int, Intent)} and include a line of code like this:&lt;/p&gt;
+ *
+ * &lt;p&gt;{@code
+ * public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+ *   IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+ *   if (scanResult != null) {
+ *     // handle scan result
+ *   }
+ *   // else continue with any other code you need in the method
+ *   ...
+ * }
+ * }&lt;/p&gt;
+ *
+ * &lt;p&gt;This is where you will handle a scan result.
+ * Second, just call this in response to a user action somewhere to begin the scan process:&lt;/p&gt;
+ *
+ * &lt;p&gt;{@code integrator.initiateScan();}&lt;/p&gt;
+ *
+ * &lt;p&gt;You can use {@link #initiateScan(Activity, String, String, String, String)} or
+ * {@link #initiateScan(Activity, int, int, int, int)} to customize the download prompt with
+ * different text labels.&lt;/p&gt;
+ *
+ * &lt;p&gt;Some code, particularly download integration, was contributed from the Anobiit application.&lt;/p&gt;
+ *
+ *
+ * This class has been modified to run general-purpose intents. The original work was done by
+ * Sean Owen and Fred Lin, and the modifications by Ben Dodson.
+ *
+ *
+ * @author Sean Owen
+ * @author Fred Lin
+ * @author Ben Dodson
+ */
+public final class IntentLauncher {
+
+  public static final int REQUEST_CODE = 0x070ADE2; // get it?
+
+  private IntentLauncher() {
+  }
+
+  
+  
+  public static boolean launch(Context context, Intent intent, String appName) {
+	  return launch(context,
+			  intent,
+			  null,
+			  null,
+			  appName,
+			  "Install %APP%?",
+              "This application requires %APP%, which is not currently installed. Would you like to install it?",
+              "Yes",
+              "No");
+  }
+  
+  public static boolean launch(Context context, Intent intent, String packageName, String downloadRef, String appName) {
+	  return launch(context,
+			  intent,
+			  packageName,
+			  downloadRef,
+			  appName,
+			  "Install %APP%?",
+              "This application requires %APP%, which is not currently installed. Would you like to install it?",
+              "Yes",
+              "No");
+  }
+  
+  
+  public static boolean launch(Context context,
+		  String action,
+		  String packageName,
+		  String stringAppName) {
+	  
+
+	 return launch(context,
+			  action,
+			  packageName,
+			  packageName,
+			  stringAppName,
+			  "Install %APP%?",
+              "This application requires %APP%, which is not currently installed. Would you like to install it?",
+              "Yes",
+              "No");
+  }
+  
+  
+  public static boolean launch(Context context,
+							  String action,
+							  String packageName,
+							  String downloadTerm,
+							  String stringAppName) {
+	  
+	  return launch(context,
+			  action,
+			  packageName,
+			  downloadTerm,
+			  stringAppName,
+			  "Install %APP%?",
+              "This application requires %APP%, which is not currently installed. Would you like to install it?",
+              "Yes",
+              "No");
+  }
+  
+
+  /**
+   * Launches an intent.
+   *
+   * @param stringTitle title of dialog prompting user to download Barcode Scanner
+   * @param stringMessage text of dialog prompting user to download Barcode Scanner
+   * @param stringButtonYes text of button user clicks when agreeing to download Barcode Scanner (e.g. "Yes")
+   * @param stringButtonNo text of button user clicks when declining to download Barcode Scanner (e.g. "No")
+   * @return the contents of the barcode that was scanned, or null if none was found
+   * @throws InterruptedException if timeout expires before a scan completes
+   */
+  public static boolean launch(Context context,
+		  						  String action,
+		  						  String packageName,
+		  						  String downloadTerm,
+		  						  String stringAppName,
+                                  String stringTitle,
+                                  String stringMessage,
+                                  String stringButtonYes,
+                                  String stringButtonNo) {
+	
+	  Intent intentLaunch = new Intent(action);
+	  List&lt;ResolveInfo&gt;resolved = context.getPackageManager().queryIntentActivities(intentLaunch, 0);
+	  if (resolved.size() &gt; 0) {
+		  if (null != packageName) {
+			  ActivityInfo info = null;
+			  int i = 0;
+			  while (info == null &amp;&amp; i &lt; resolved.size()) {
+				  if (resolved.get(i).activityInfo.packageName.equals(packageName)) {
+					  info = resolved.get(i).activityInfo;
+				  }
+				  i++;
+			  }
+			  
+			  if (info == null) {
+				  showDownloadDialog(context, downloadTerm, stringAppName, stringTitle, stringMessage, stringButtonYes, stringButtonNo);
+			  } else {
+				  ComponentName component = new ComponentName(info.packageName,info.name);
+ 				  intentLaunch.setComponent(component);
+				  if (context instanceof Activity) {
+			    		((Activity)context).startActivityForResult(intentLaunch, REQUEST_CODE);
+				  } else {
+					  	context.startActivity(intentLaunch);
+				  }
+				  return true;
+			  }
+			  
+		  } else {
+			  if (context instanceof Activity) {
+		    		((Activity)context).startActivityForResult(intentLaunch, REQUEST_CODE);
+			  } else {
+				  	context.startActivity(intentLaunch);
+			  }
+			  return true;
+		  }
+	  } else {
+		  
+		  if (null != packageName) {
+			  showDownloadDialog(context, packageName, stringAppName, stringTitle, stringMessage, stringButtonYes, stringButtonNo);
+		  } else {
+			  // error
+		  }
+	  }
+	  return false;
+  }
+
+  
+  /**
+   * Launches an intent.
+   *
+   * @param stringTitle title of dialog prompting user to download Barcode Scanner
+   * @param stringMessage text of dialog prompting user to download Barcode Scanner
+   * @param stringButtonYes text of button user clicks when agreeing to download Barcode Scanner (e.g. "Yes")
+   * @param stringButtonNo text of button user clicks when declining to download Barcode Scanner (e.g. "No")
+   * @return the contents of the barcode that was scanned, or null if none was found
+   * @throws InterruptedException if timeout expires before a scan completes
+   */
+  public static boolean launch(Context context,
+		  						  Intent intentLaunch,
+		  						  String packageName,
+		  						  String downloadRef,
+		  						  String stringAppName,
+                                  String stringTitle,
+                                  String stringMessage,
+                                  String stringButtonYes,
+                                  String stringButtonNo) {
+	
+    try {
+
+			List&lt;ResolveInfo&gt; resolved = context.getPackageManager()
+					.queryIntentActivities(intentLaunch, 0);
+			if (resolved.size() &gt; 0) {
+				if (null != packageName) {
+					ActivityInfo info = null;
+					int i = 0;
+					while (info == null &amp;&amp; i &lt; resolved.size()) {
+						if (resolved.get(i).activityInfo.packageName
+								.equals(packageName)) {
+							info = resolved.get(i).activityInfo;
+						}
+						i++;
+					}
+
+					if (info != null) {
+						ComponentName component = new ComponentName(
+								info.packageName, info.name);
+						intentLaunch.setComponent(component);
+						if (context instanceof Activity) {
+							((Activity) context).startActivityForResult(
+									intentLaunch, REQUEST_CODE);
+						} else {
+							context.startActivity(intentLaunch);
+						}
+
+						return true;
+					}
+				}
+
+			}
+			throw new ActivityNotFoundException();	   	  
+    } catch (ActivityNotFoundException e) {
+    	ComponentName component = intentLaunch.getComponent(); 
+    	if (downloadRef != null){
+    		showDownloadDialog(context, downloadRef, stringAppName, stringTitle, stringMessage, stringButtonYes, stringButtonNo);
+    	} else if (component != null) {
+    		showDownloadDialog(context, component.getPackageName(), stringAppName, stringTitle, stringMessage, stringButtonYes, stringButtonNo);
+    	} else {
+    		AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+    	    alertDialog.setTitle("Error launching application");
+    	    alertDialog.setMessage("Could not launch the required application.");
+    	    alertDialog.show();
+    	}
+    }
+    return false;
+  }
+  
+  
+  private static void showDownloadDialog(final Context context,
+		  								 final String downloadTerm,
+		  								 final String stringAppName,
+                                         String stringTitle,
+                                         String stringMessage,
+                                         String stringButtonYes,
+                                         String stringButtonNo) {
+    AlertDialog.Builder downloadDialog = new AlertDialog.Builder(context);
+    downloadDialog.setTitle(stringTitle.replace("%APP%", stringAppName));
+    downloadDialog.setMessage(stringMessage.replace("%APP%", stringAppName));
+    downloadDialog.setPositiveButton(stringButtonYes, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialogInterface, int i) {
+    	if (downloadTerm.contains("://")) {
+    		Uri uri = Uri.parse(downloadTerm);
+	        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        context.startActivity(intent);
+    	} else {
+	        Uri uri = Uri.parse("market://search?q="+downloadTerm);
+	        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        context.startActivity(intent);
+    	}
+      }
+    });
+    downloadDialog.setNegativeButton(stringButtonNo, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialogInterface, int i) {}
+    });
+    downloadDialog.show();
+  }
+
+}
+
+  </pre>
+</div>
+<div id="footer">
+Generated by <a href="http://code.google.com/p/doclava/">Doclava</a>.
+</div> <!-- end footer -->
+
+</div> <!-- jd-content -->
+
+</div><!-- end doc-content -->
+
+</div> <!-- end body-content --> 
+
+<script type="text/javascript">
+init(); /* initialize doclava-developer-docs.js */
+</script>
+
+</body>
+</html>
