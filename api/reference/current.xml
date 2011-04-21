@@ -9,6 +9,23 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<method name="bind"
+ return="edu.stanford.junction.Junction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uri" type="java.net.URI">
+</parameter>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
 <method name="castActivity"
  return="void"
  abstract="false"
@@ -54,6 +71,19 @@
  visibility="public"
 >
 <parameter name="activity" type="android.app.Activity">
+</parameter>
+</method>
+<method name="getDefaultSwitchboardConfig"
+ return="edu.stanford.junction.SwitchboardConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uri" type="java.net.URI">
 </parameter>
 </method>
 <method name="getInstance"
@@ -207,6 +237,19 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<parameter name="intent" type="android.content.Intent">
+</parameter>
+</method>
+<method name="isJoinable"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
 <parameter name="a" type="android.app.Activity">
 </parameter>
 </method>
@@ -233,7 +276,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="activity" type="android.app.Activity">
+<parameter name="bundle" type="android.os.Bundle">
 </parameter>
 <parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
 </parameter>
@@ -245,12 +288,29 @@
  abstract="false"
  native="false"
  synchronized="false"
- static="false"
+ static="true"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="bundle" type="android.os.Bundle">
+<parameter name="a" type="android.app.Activity">
+</parameter>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
+<method name="newJunction"
+ return="edu.stanford.junction.Junction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="intent" type="android.content.Intent">
 </parameter>
 <parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
 </parameter>
@@ -664,6 +724,313 @@
  visibility="protected"
 >
 </field>
+</class>
+</package>
+<package name="edu.stanford.junction.provider.bluetooth"
+>
+<class name="BluetoothSwitchboardConfig"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="edu.stanford.junction.SwitchboardConfig">
+</implements>
+<constructor name="BluetoothSwitchboardConfig"
+ type="edu.stanford.junction.provider.bluetooth.BluetoothSwitchboardConfig"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="BluetoothSwitchboardConfig"
+ type="edu.stanford.junction.provider.bluetooth.BluetoothSwitchboardConfig"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="requireSecurePairing" type="boolean">
+</parameter>
+</constructor>
+<method name="getUuid"
+ return="java.util.UUID"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="securePairingRequired"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setUuid"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="uuid" type="java.util.UUID">
+</parameter>
+</method>
+<field name="APP_NAME"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="Junction"
+ extends="edu.stanford.junction.Junction"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="Junction"
+ type="edu.stanford.junction.provider.bluetooth.Junction"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uri" type="java.net.URI">
+</parameter>
+<parameter name="script" type="edu.stanford.junction.api.activity.ActivityScript">
+</parameter>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<parameter name="config" type="edu.stanford.junction.provider.bluetooth.BluetoothSwitchboardConfig">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</constructor>
+<method name="disconnect"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="doSendMessageToActor"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="actorID" type="java.lang.String">
+</parameter>
+<parameter name="message" type="org.json.JSONObject">
+</parameter>
+</method>
+<method name="doSendMessageToRole"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="role" type="java.lang.String">
+</parameter>
+<parameter name="message" type="org.json.JSONObject">
+</parameter>
+</method>
+<method name="doSendMessageToSession"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="org.json.JSONObject">
+</parameter>
+</method>
+<method name="getAcceptedInvitation"
+ return="java.net.URI"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getActivityScript"
+ return="edu.stanford.junction.api.activity.ActivityScript"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getBaseInvitationURI"
+ return="java.net.URI"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSessionID"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSwitchboard"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<field name="JX_CREATOR"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="JX_JOINED"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="NS_JX"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="JunctionProvider"
+ extends="edu.stanford.junction.provider.JunctionProvider"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="JunctionProvider"
+ type="edu.stanford.junction.provider.bluetooth.JunctionProvider"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="config" type="edu.stanford.junction.provider.bluetooth.BluetoothSwitchboardConfig">
+</parameter>
+</constructor>
+<method name="generateSessionUri"
+ return="java.net.URI"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getActivityScript"
+ return="edu.stanford.junction.api.activity.ActivityScript"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uri" type="java.net.URI">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
+<method name="newJunction"
+ return="edu.stanford.junction.Junction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uri" type="java.net.URI">
+</parameter>
+<parameter name="script" type="edu.stanford.junction.api.activity.ActivityScript">
+</parameter>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
 </class>
 </package>
 </api>
