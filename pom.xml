@@ -76,7 +76,11 @@
         <version>2.7</version>
         <configuration>
           <bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jsse.jar</bootclasspath>
-          <docletPath>/path/to/com/google/doclava/Doclava/0.9/Doclava-0.9.jar</docletPath>
+          <docletArtifact>
+            <groupId>com.google.doclava</groupId>
+            <artifactId>doclava</artifactId>
+            <version>1.0.4-SNAPSHOT</version>
+          </docletArtifact>
           <doclet>com.google.doclava.Doclava</doclet>
           <additionalparam>
 	    -quiet
