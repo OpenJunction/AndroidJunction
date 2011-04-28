@@ -39,6 +39,8 @@ import android.os.Build.VERSION_CODES;
 import android.util.Log;
 
 import edu.stanford.junction.JunctionException;
+import edu.stanford.junction.JunctionMaker;
+import edu.stanford.junction.android.AndroidJunctionMaker;
 import edu.stanford.junction.api.activity.ActivityScript;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.api.messaging.MessageHeader;
@@ -626,5 +628,9 @@ public class Junction extends edu.stanford.junction.Junction {
     		}
     	}
     	return tmp;
+    }
+
+    public edu.stanford.junction.Junction bind(URI uri, JunctionActor actor) throws JunctionException {
+    	return AndroidJunctionMaker.bind(uri, actor);
     }
 }

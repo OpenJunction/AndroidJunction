@@ -41,6 +41,7 @@ import edu.stanford.junction.api.activity.Cast;
 import edu.stanford.junction.api.activity.JunctionActor;
 import edu.stanford.junction.provider.JunctionProvider;
 import edu.stanford.junction.provider.bluetooth.BluetoothSwitchboardConfig;
+import edu.stanford.junction.provider.xmpp.XMPPSwitchboardConfig;
 
 // TODO:
 // Class hierarchy is badly broken.
@@ -458,5 +459,16 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	 */
 	public static Junction bind(URI uri, JunctionActor actor) throws JunctionException {
 		return AndroidJunctionMaker.getInstance(AndroidJunctionMaker.getDefaultSwitchboardConfig(uri)).newJunction(uri, actor);
+	}
+
+	/**
+	 * Binds a {@link JunctionActor} to a randomly generated sesssion, using the default
+	 * switchboard.
+	 */
+	public static Junction bind(JunctionActor actor) throws JunctionException {
+		// default
+		SwitchboardConfig config = new XMPPSwitchboardConfig("prpl.stanford.edu");
+		JunctionMaker maker = JunctionMaker.getInstance(config);
+		return maker.newJunction(maker.generateSessionUri(), actor);
 	}
 }
