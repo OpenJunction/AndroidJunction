@@ -26,6 +26,21 @@
 <exception name="JunctionException" type="edu.stanford.junction.JunctionException">
 </exception>
 </method>
+<method name="bind"
+ return="edu.stanford.junction.Junction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
 <method name="castActivity"
  return="void"
  abstract="false"
@@ -828,6 +843,23 @@
 <exception name="JunctionException" type="edu.stanford.junction.JunctionException">
 </exception>
 </constructor>
+<method name="bind"
+ return="edu.stanford.junction.Junction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uri" type="java.net.URI">
+</parameter>
+<parameter name="actor" type="edu.stanford.junction.api.activity.JunctionActor">
+</parameter>
+<exception name="JunctionException" type="edu.stanford.junction.JunctionException">
+</exception>
+</method>
 <method name="disconnect"
  return="void"
  abstract="false"
