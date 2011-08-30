@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.net.Uri;
 
 import edu.stanford.junction.Junction;
 import edu.stanford.junction.JunctionException;
@@ -460,6 +461,15 @@ public class AndroidJunctionMaker extends JunctionMaker {
 	public static Junction bind(URI uri, JunctionActor actor) throws JunctionException {
 		return AndroidJunctionMaker.getInstance(AndroidJunctionMaker.getDefaultSwitchboardConfig(uri)).newJunction(uri, actor);
 	}
+
+	/**
+     * Binds a {@link JunctionActor} to a session URI, using the default
+     * switchboard for that URI.
+     */
+    public static Junction bind(Uri uri, JunctionActor actor) throws JunctionException {
+        URI uriCaps = URI.create(uri.toString());
+        return AndroidJunctionMaker.getInstance(AndroidJunctionMaker.getDefaultSwitchboardConfig(uriCaps)).newJunction(uriCaps, actor);
+    }
 
 	/**
 	 * Binds a {@link JunctionActor} to a randomly generated sesssion, using the default
