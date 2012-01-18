@@ -96,9 +96,21 @@
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+    <repository>
+      <id>mobisocial-releases</id>
+      <name>Internal Releases</name>
+      <url>http://mobisocial.stanford.edu:8081/nexus/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>mobisocial-snapshots</id>
+      <name>Internal Snapshots</name>
+      <url>http://mobisocial.stanford.edu:8081/nexus/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
   <repositories>
     <repository>
-      <id>prpl-public</id>
+      <id>mobisocial-public</id>
       <name>PrPl Public Repository</name>
       <url>http://prpl.stanford.edu:8081/nexus/content/groups/public</url>
       <releases> <enabled>true</enabled> </releases>
